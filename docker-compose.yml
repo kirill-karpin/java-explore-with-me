@@ -1,14 +1,40 @@
 services:
   stats-server:
+    build: stat/stat-server
     ports:
       - "9090:9090"
+    networks:
+      - ewm-network
 
   stats-db:
     image: postgres:16.1
+    container_name: ewm-stats-db
+    ports:
+      - "6542:5432"
+    environment:
+      - POSTGRES_USER=stats
+      - POSTGRES_PASSWORD=stats
+      - POSTGRES_DB=stats_db
+    healthcheck:
+      test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
+      timeout: 5s
+      interval: 5s
+      retries: 10
+    networks:
+      - ewm-network
 
   ewm-service:
+    build: ewm-stats-service/stat-server
     ports:
       - "8080:8080"
+    networks:
+      - ewm-network
 
   ewm-db:
     image: postgres:16.1
+    networks:
+      - ewm-network
+
+networks:
+  ewm-network:
+    driver: bridge

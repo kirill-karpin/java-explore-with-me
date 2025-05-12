@@ -1,6 +1,6 @@
 services:
   stats-server:
-    build: stat/stat-server
+    build: ewm-stats-service/stat-server
     ports:
       - "9090:9090"
     networks:

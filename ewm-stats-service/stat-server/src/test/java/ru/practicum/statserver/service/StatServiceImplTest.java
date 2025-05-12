@@ -20,12 +20,12 @@ class StatServiceImplTest {
   @Test
   void createEvent() {
 
-    CreateHitDto eventDto = CreateHitDto.builder().
-        app("test")
+    CreateHitDto eventDto = CreateHitDto.builder()
+        .app("test")
         .ip("1.1.1.1")
         .uri("/test")
         .timestamp(LocalDateTime.parse("2025-01-01T01:01:01"))
-    .build();
+        .build();
 
     HitDto event = statService.createEvent(eventDto);
     assertNotNull(event);

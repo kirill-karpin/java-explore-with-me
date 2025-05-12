@@ -3,8 +3,6 @@ services:
     build: ewm-stats-service/stat-server
     ports:
       - "9090:9090"
-    networks:
-      - ewm-network
 
   stats-db:
     image: postgres:16.1
@@ -20,21 +18,11 @@ services:
       timeout: 5s
       interval: 5s
       retries: 10
-    networks:
-      - ewm-network
 
   ewm-service:
     build: ewm-main-service
     ports:
       - "8080:8080"
-    networks:
-      - ewm-network
 
   ewm-db:
     image: postgres:16.1
-    networks:
-      - ewm-network
-
-networks:
-  ewm-network:
-    driver: bridge

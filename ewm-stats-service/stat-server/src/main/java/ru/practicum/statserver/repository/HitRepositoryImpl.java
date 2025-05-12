@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 import ru.practicum.statserver.model.Hit;
-import ru.practicum.statserver.model.Hit_;
 
 @Repository
 public class HitRepositoryImpl implements HitRepositoryCustom {
@@ -47,12 +46,12 @@ public class HitRepositoryImpl implements HitRepositoryCustom {
     cq.where(predicates.toArray(new Predicate[0]));
 
     if (unique) {
-      cq.multiselect(root.get(Hit_.app), root.get(Hit_.uri), cb.countDistinct(root.get(Hit_.ip)));
+      cq.multiselect(root.get("app"), root.get("uri"), cb.countDistinct(root.get("ip")));
     } else {
-      cq.multiselect(root.get(Hit_.app), root.get(Hit_.uri), cb.count(root.get(Hit_.id)));
+      cq.multiselect(root.get("app"), root.get("uri"), cb.count(root.get("id")));
     }
 
-    cq.groupBy(root.get(Hit_.uri), root.get(Hit_.app));
+    cq.groupBy(root.get("uri"), root.get("app"));
 
     return em.createQuery(cq).getResultList().stream().toList();
   }

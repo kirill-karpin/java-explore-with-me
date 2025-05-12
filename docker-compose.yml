@@ -24,7 +24,7 @@ services:
       - ewm-network
 
   ewm-service:
-    build: ewm-stats-service/stat-server
+    build: ewm-main-service
     ports:
       - "8080:8080"
     networks:

@@ -21,7 +21,7 @@ class StatController {
     return statClient.getStatsList(
         LocalDateTime.now().minusDays(90),
         LocalDateTime.now().plusDays(60),
-        List.of("ewm-main-service"),
+        List.of("/test"),
         false
     );
   }

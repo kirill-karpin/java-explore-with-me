@@ -36,7 +36,7 @@ public class HitRepositoryImpl implements HitRepositoryCustom {
 
     predicates.add(cb.between(root.get("created"), start, end));
 
-    if (uris != null) {
+    if (uris != null && !uris.isEmpty()) {
       In<String> inClause = cb.in(root.get("uri"));
       for (String uri : uris) {
         inClause.value(uri);

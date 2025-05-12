@@ -15,6 +15,6 @@ public class HitValue {
 
   private String app;
   private String uri;
-  private Long count;
+  private Long hits;
 
 }

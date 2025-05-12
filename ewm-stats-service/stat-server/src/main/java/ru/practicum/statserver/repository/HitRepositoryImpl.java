@@ -16,7 +16,7 @@ import ru.practicum.statserver.model.Hit;
 @Repository
 public class HitRepositoryImpl implements HitRepositoryCustom {
 
-  private EntityManager em;
+  private final EntityManager em;
 
   public HitRepositoryImpl(EntityManager em) {
     this.em = em;
@@ -46,9 +46,19 @@ public class HitRepositoryImpl implements HitRepositoryCustom {
     cq.where(predicates.toArray(new Predicate[0]));
 
     if (unique) {
-      cq.multiselect(root.get("app"), root.get("uri"), cb.countDistinct(root.get("ip")));
+      cq.multiselect(
+          root.get("app"),
+          root.get("uri"),
+          cb.countDistinct(root.get("ip"))
+      );
+      cq.orderBy(
+          cb.desc(cb.countDistinct(root.get("ip")))
+      );
     } else {
       cq.multiselect(root.get("app"), root.get("uri"), cb.count(root.get("id")));
+      cq.orderBy(
+          cb.desc(cb.count(root.get("id")))
+      );
     }
 
     cq.groupBy(root.get("uri"), root.get("app"));

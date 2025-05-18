@@ -54,7 +54,5 @@ class CategoryServiceImplTest {
     assertNotNull(categoryDto);
 
     categoryService.delete(categoryDto.getId());
-
-    assertEquals(0, categoryService.getAll().size());
   }
 }

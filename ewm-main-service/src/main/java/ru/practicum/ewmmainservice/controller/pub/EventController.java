@@ -2,11 +2,14 @@ package ru.practicum.ewmmainservice.controller.pub;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
-import org.springframework.http.ResponseEntity;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.practicum.ewmmainservice.core.event.EventService;
+import ru.practicum.ewmmainservice.core.event.dto.EventDto;
 
 @RestController
 @RequestMapping("/events")
@@ -16,15 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
         description = "Публичный API для работы с событиями"
     )
 })
+@RequiredArgsConstructor
 class EventController {
 
+  private final EventService eventService;
+
   @GetMapping
-  public ResponseEntity<?> getList() {
-    return ResponseEntity.ok().build();
+  public List<EventDto> getList() {
+    return eventService.getList();
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<?> getById(@PathVariable Long id) {
-    return ResponseEntity.ok().build();
+  public EventDto getById(@PathVariable Long id) {
+    return eventService.getById(id);
   }
 }

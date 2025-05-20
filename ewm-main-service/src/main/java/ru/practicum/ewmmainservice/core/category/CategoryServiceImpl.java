@@ -1,5 +1,6 @@
 package ru.practicum.ewmmainservice.core.category;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewmmainservice.core.category.dto.CreateCategoryRequest;
@@ -44,4 +45,18 @@ class CategoryServiceImpl implements CategoryService {
     categoryRepository.deleteById(categoryId);
   }
 
+  @Override
+  public List<CategoryDto> getList() {
+    return categoryRepository.findAll()
+        .stream()
+        .map(mapper::toDto)
+        .toList();
+  }
+
+  @Override
+  public CategoryDto getById(Long categoryId) {
+    return categoryRepository.findById(categoryId).map(mapper::toDto).orElseThrow(
+        () -> new RuntimeException("Category not found")
+    );
+  }
 }

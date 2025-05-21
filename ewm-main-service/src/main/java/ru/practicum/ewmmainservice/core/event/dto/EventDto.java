@@ -37,7 +37,5 @@ public class EventDto implements Serializable {
   @Size(max = 120)
   String title;
   @NotNull
-  Double lat;
-  @NotNull
-  Double lon;
+  LocationDto location;
 }

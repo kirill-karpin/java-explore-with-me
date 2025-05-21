@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewmmainservice.core.category.dto.CreateCategoryRequest;
 import ru.practicum.ewmmainservice.core.category.dto.UpdateCategoryRequest;
+import ru.practicum.ewmmainservice.core.exceptions.NotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +27,7 @@ class CategoryServiceImpl implements CategoryService {
   public CategoryDto update(Long categoryId, UpdateCategoryRequest updateCategoryRequest) {
 
     categoryRepository.findById(categoryId)
-        .orElseThrow(() -> new RuntimeException("Category not found"));
+        .orElseThrow(() -> new NotFoundException("Category not found"));
 
     Category categoryToUpdate = mapper.toEntity(updateCategoryRequest);
     categoryToUpdate.setId(categoryId);
@@ -40,7 +41,7 @@ class CategoryServiceImpl implements CategoryService {
   public void delete(Long categoryId) {
 
     categoryRepository.findById(categoryId)
-        .orElseThrow(() -> new RuntimeException("Category not found"));
+        .orElseThrow(() -> new NotFoundException("Category not found"));
 
     categoryRepository.deleteById(categoryId);
   }
@@ -56,7 +57,7 @@ class CategoryServiceImpl implements CategoryService {
   @Override
   public CategoryDto getById(Long categoryId) {
     return categoryRepository.findById(categoryId).map(mapper::toDto).orElseThrow(
-        () -> new RuntimeException("Category not found")
+        () -> new NotFoundException("Category not found")
     );
   }
 }

@@ -18,6 +18,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import ru.practicum.ewmmainservice.core.user.ParticipationRequest;
 import ru.practicum.ewmmainservice.core.category.Category;
 import ru.practicum.ewmmainservice.core.compilation.Compilation;
@@ -75,10 +76,9 @@ public class Event {
   @Column(name = "participant_limit")
   private Integer participantLimit;
 
-  @Size(max = 50)
   @NotNull
   @Column(name = "state", nullable = false, length = 50)
-  private String state;
+  private EventState state;
 
   @Column(name = "request_moderation")
   private Boolean requestModeration;
@@ -101,5 +101,9 @@ public class Event {
 
   @OneToMany(mappedBy = "eventid")
   private Set<ParticipationRequest> participationRequests = new LinkedHashSet<>();
+
+  @ColumnDefault("0")
+  @Column(name = "views")
+  private Long views;
 
 }

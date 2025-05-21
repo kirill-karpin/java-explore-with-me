@@ -1,7 +1,10 @@
 package ru.practicum.ewmmainservice.core.user;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.practicum.ewmmainservice.core.event.dto.EventDto;
+import ru.practicum.ewmmainservice.core.exceptions.NotFoundException;
 import ru.practicum.ewmmainservice.core.user.dto.CreateUserRequest;
 import ru.practicum.ewmmainservice.core.user.dto.UpdateUserRequest;
 import ru.practicum.ewmmainservice.core.user.dto.UserResponse;
@@ -26,7 +29,7 @@ class UserServiceImpl implements UserService {
   public UserResponse update(Long userId, UpdateUserRequest updateUserRequest) {
 
     userRepository.findById(userId)
-        .orElseThrow(() -> new RuntimeException("User not found"));
+        .orElseThrow(() -> new NotFoundException("User not found"));
 
     User userToUpdate = mapper.toEntity(updateUserRequest);
     userToUpdate.setId(userId);
@@ -40,9 +43,13 @@ class UserServiceImpl implements UserService {
   public void delete(Long categoryId) {
 
     userRepository.findById(categoryId)
-        .orElseThrow(() -> new RuntimeException("User not found"));
+        .orElseThrow(() -> new NotFoundException("User not found"));
 
     userRepository.deleteById(categoryId);
   }
 
+  @Override
+  public List<UserResponse> getList() {
+    return userRepository.findAll().stream().map(mapper::toDto).toList();
+  }
 }

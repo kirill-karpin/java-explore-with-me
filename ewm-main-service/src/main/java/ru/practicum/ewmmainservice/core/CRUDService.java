@@ -1,4 +1,4 @@
-package ru.practicum.ewmmainservice.common;
+package ru.practicum.ewmmainservice.core;
 
 import java.util.List;
 

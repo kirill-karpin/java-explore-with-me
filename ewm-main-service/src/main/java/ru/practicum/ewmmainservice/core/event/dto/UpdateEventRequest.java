@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 import lombok.Value;
+import ru.practicum.ewmmainservice.core.event.EventState;
 
 /**
  * DTO for {@link ru.practicum.ewmmainservice.core.event.Event}
@@ -29,14 +30,11 @@ public class UpdateEventRequest implements Serializable {
   Boolean paid;
   Integer participantLimit;
   @NotNull
-  @Size(max = 50)
-  String state;
+  EventState state;
   Boolean requestModeration;
   @NotNull
   @Size(max = 120)
   String title;
   @NotNull
-  Double lat;
-  @NotNull
-  Double lon;
+  LocationDto location;
 }

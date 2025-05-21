@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.practicum.ewmmainservice.core.compilation.dto.CompilationDto;
 import ru.practicum.ewmmainservice.core.compilation.dto.CreateCompilationRequest;
 import ru.practicum.ewmmainservice.core.compilation.dto.UpdateCompilationRequest;
+import ru.practicum.ewmmainservice.core.exceptions.NotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +25,7 @@ class CompilationServiceImpl implements
   @Override
   public CompilationDto update(Long id, UpdateCompilationRequest updateCompilationRequest) {
     compilationRepository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Compilation not found"));
+        .orElseThrow(() -> new NotFoundException("Compilation not found"));
 
     Compilation compilation = mapper.toEntity(updateCompilationRequest);
     compilation.setId(id);
@@ -34,7 +35,7 @@ class CompilationServiceImpl implements
   @Override
   public void delete(Long id) {
     compilationRepository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Compilation not found"));
+        .orElseThrow(() -> new NotFoundException("Compilation not found"));
     compilationRepository.deleteById(id);
   }
 
@@ -48,6 +49,6 @@ class CompilationServiceImpl implements
   @Override
   public CompilationDto getById(Long id) {
     return mapper.toDto(compilationRepository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Compilation not found")));
+        .orElseThrow(() -> new NotFoundException("Compilation not found")));
   }
 }

@@ -2,48 +2,59 @@ package ru.practicum.ewmmainservice.controller.priv;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.practicum.ewmmainservice.core.event.dto.CreateEventRequest;
+import ru.practicum.ewmmainservice.core.event.dto.EventDto;
+import ru.practicum.ewmmainservice.core.event.dto.UpdateEventRequest;
+import ru.practicum.ewmmainservice.core.event.service.EventService;
 
 @RestController
 @RequestMapping("/users")
 @Tags({
     @Tag(name = "Private: События\n", description = "Закрытый API для работы с событиями пользователя")})
+@RequiredArgsConstructor
 class PrivateUsersController {
 
+  private final EventService eventService;
+
   @GetMapping("/{userId}/events")
-  public ResponseEntity<?> getUserEvents(@PathVariable long userId) {
+  public ResponseEntity<?> getUserEvents(@PathVariable Long userId) {
     return ResponseEntity.ok("get user events");
   }
 
   @PostMapping("/{userId}/events")
-  public ResponseEntity<?> createEvent(@PathVariable long userId) {
-    return ResponseEntity.ok("get user events");
+  public EventDto createEvent(@PathVariable Long userId, @RequestBody CreateEventRequest request) {
+    return eventService.createUserEvent(userId, request);
   }
 
-  @PostMapping("/{userId}/events/{eventId}")
-  public ResponseEntity<?> getEvent(@PathVariable long userId, @PathVariable long eventId) {
-    return ResponseEntity.ok("get user events");
+  @GetMapping("/{userId}/events/{eventId}")
+  public EventDto getEvent(@PathVariable Long userId, @PathVariable Long eventId) {
+    return eventService.getUserEventById(userId, eventId);
   }
 
   @PatchMapping("/{userId}/events/{eventId}")
-  public ResponseEntity<?> updateEventById(@PathVariable long userId, @PathVariable long eventId) {
-    return ResponseEntity.ok("get user events");
+  public EventDto updateEventById(@PathVariable Long userId, @PathVariable Long eventId,
+      @RequestBody
+      UpdateEventRequest request) {
+    return eventService.updateUserEventById(userId, eventId, request);
   }
 
   @GetMapping("/{userId}/events/{eventId}/requests")
-  public ResponseEntity<?> getEventRequests(@PathVariable long userId, @PathVariable long eventId) {
+  public ResponseEntity<?> getEventRequests(@PathVariable Long userId, @PathVariable Long eventId) {
     return ResponseEntity.ok("get user events");
   }
 
   @PatchMapping("/{userId}/events/{eventId}/requests")
-  public ResponseEntity<?> updateEventRequests(@PathVariable long userId,
-      @PathVariable long eventId) {
+  public ResponseEntity<?> updateEventRequests(@PathVariable Long userId,
+      @PathVariable Long eventId) {
     return ResponseEntity.ok("get user events");
   }
 

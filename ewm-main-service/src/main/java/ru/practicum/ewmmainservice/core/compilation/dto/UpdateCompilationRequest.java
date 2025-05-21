@@ -7,10 +7,7 @@ import lombok.Data;
 import lombok.Value;
 import ru.practicum.ewmmainservice.core.compilation.Compilation;
 
-/**
- * DTO for {@link Compilation}
- */
-@Data
+@Value
 public class UpdateCompilationRequest  {
 
   Long id;

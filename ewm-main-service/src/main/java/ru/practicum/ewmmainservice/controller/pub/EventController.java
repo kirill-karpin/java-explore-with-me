@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.ewmmainservice.core.event.EventService;
 import ru.practicum.ewmmainservice.core.event.dto.EventDto;
+import ru.practicum.ewmmainservice.core.event.service.EventFilterParams;
+import ru.practicum.ewmmainservice.core.event.service.EventService;
 
 @RestController
 @RequestMapping("/events")
@@ -25,8 +26,10 @@ class EventController {
   private final EventService eventService;
 
   @GetMapping
-  public List<EventDto> getList() {
-    return eventService.getList();
+  public List<EventDto> getList(EventFilterParams filter) {
+
+    return eventService.getList(filter);
+
   }
 
   @GetMapping("/{id}")

@@ -2,7 +2,6 @@ package ru.practicum.ewmmainservice.core.event.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import java.io.Serializable;
 import java.time.Instant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +14,7 @@ import ru.practicum.ewmmainservice.core.event.Event;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateEventDto implements Serializable {
+public class CreateEventDto {
 
   @NotNull
   @Size(max = 2000)

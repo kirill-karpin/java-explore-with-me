@@ -8,8 +8,9 @@ import ru.practicum.client.StatClientImpl;
 
 @Configuration
 public class StatClientConfig {
-    @Bean
-    public StatClient statClient(@Value("${app.client.url}") String statServerUrl) {
-        return new StatClientImpl(statServerUrl);
-    }
+
+  @Bean
+  public StatClient statClient(@Value("${app.client.url}") String statServerUrl) {
+    return new StatClientImpl(statServerUrl);
+  }
 }

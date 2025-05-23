@@ -10,6 +10,7 @@ import lombok.Value;
 @Builder
 @Value
 public class UpdateUserRequest {
+
   Long id;
 
   @Size(max = 250)

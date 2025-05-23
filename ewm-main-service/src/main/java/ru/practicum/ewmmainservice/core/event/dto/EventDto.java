@@ -2,7 +2,6 @@ package ru.practicum.ewmmainservice.core.event.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import java.io.Serializable;
 import java.time.Instant;
 import lombok.Value;
 import ru.practicum.ewmmainservice.core.event.Event;
@@ -11,7 +10,7 @@ import ru.practicum.ewmmainservice.core.event.Event;
  * DTO for {@link Event}
  */
 @Value
-public class EventDto implements Serializable {
+public class EventDto {
 
   Long id;
   @NotNull

@@ -5,7 +5,7 @@ import ru.practicum.ewmmainservice.core.category.dto.CategoryDto;
 import ru.practicum.ewmmainservice.core.category.dto.CreateCategoryDto;
 import ru.practicum.ewmmainservice.core.category.dto.UpdateCategoryDto;
 
-public interface CategoryService  {
+public interface CategoryService {
 
   CategoryDto create(CreateCategoryDto createCategoryDto);
 

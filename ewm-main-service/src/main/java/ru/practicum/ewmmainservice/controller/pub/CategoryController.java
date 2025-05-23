@@ -4,13 +4,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.ewmmainservice.core.category.CategoryDto;
 import ru.practicum.ewmmainservice.core.category.CategoryService;
+import ru.practicum.ewmmainservice.core.category.dto.CategoryDto;
 
 @RestController
 @RequiredArgsConstructor

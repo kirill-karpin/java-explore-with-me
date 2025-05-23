@@ -10,16 +10,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.ewmmainservice.core.category.CategoryDto;
 import ru.practicum.ewmmainservice.core.category.CategoryService;
-import ru.practicum.ewmmainservice.core.category.dto.CreateCategoryRequest;
-import ru.practicum.ewmmainservice.core.category.dto.UpdateCategoryRequest;
+import ru.practicum.ewmmainservice.core.category.dto.CategoryDto;
+import ru.practicum.ewmmainservice.core.category.dto.CreateCategoryDto;
+import ru.practicum.ewmmainservice.core.category.dto.UpdateCategoryDto;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin/categories")
 @Tags({
-    @Tag(name = "Admin: Категории", description = "API для работы с категориями")
+    @Tag(name = "Admin: Категории", description = "API для работы с категориями"),
+    @Tag(name = "admin"),
 })
 class AdminCategoryController {
 
@@ -31,13 +32,13 @@ class AdminCategoryController {
   }
 
   @PostMapping
-  public CategoryDto post(@RequestBody CreateCategoryRequest createCategoryRequest) {
-    return categoryService.create(createCategoryRequest);
+  public CategoryDto post(@RequestBody CreateCategoryDto createCategoryDto) {
+    return categoryService.create(createCategoryDto);
   }
 
   @PatchMapping("/{catId}")
-  public CategoryDto patch(@PathVariable Long catId,
-      @RequestBody UpdateCategoryRequest updateCategoryRequest) {
-    return categoryService.update(catId, updateCategoryRequest);
+  public CategoryDto updateCategory(@PathVariable Long catId,
+      @RequestBody UpdateCategoryDto updateCategoryDto) {
+    return categoryService.update(catId, updateCategoryDto);
   }
 }

@@ -5,11 +5,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
+import ru.practicum.ewmmainservice.core.participation.ParticipationRequest;
 
 @Getter
 @Setter
@@ -31,5 +35,8 @@ public class User {
   @NotNull
   @Column(name = "email", nullable = false, length = 254)
   private String email;
+
+  @OneToMany(mappedBy = "requesterid")
+  private Set<ParticipationRequest> participationRequests = new LinkedHashSet<>();
 
 }

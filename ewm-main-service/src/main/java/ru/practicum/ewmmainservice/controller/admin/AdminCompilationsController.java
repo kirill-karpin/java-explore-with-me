@@ -18,7 +18,8 @@ import ru.practicum.ewmmainservice.core.compilation.dto.UpdateCompilationRequest
 @RestController
 @RequestMapping("/admin/compilations")
 @Tags({
-    @Tag(name = "Admin: Подборки событий", description = "API для работы с подборками событий")
+    @Tag(name = "Admin: Подборки событий", description = "API для работы с подборками событий"),
+    @Tag(name = "admin")
 })
 @RequiredArgsConstructor
 class AdminCompilationsController {

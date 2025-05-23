@@ -1,4 +1,4 @@
-package ru.practicum.ewmmainservice.core.user;
+package ru.practicum.ewmmainservice.core.participation;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,11 +10,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import java.time.Instant;
 import lombok.Getter;
 import lombok.Setter;
 import ru.practicum.ewmmainservice.core.event.Event;
+import ru.practicum.ewmmainservice.core.user.User;
 
 @Getter
 @Setter
@@ -41,9 +41,8 @@ public class ParticipationRequest {
   @Column(name = "created", nullable = false)
   private Instant created;
 
-  @Size(max = 50)
   @NotNull
   @Column(name = "status", nullable = false, length = 50)
-  private String status;
+  private ParticipationRequestStatus status;
 
 }

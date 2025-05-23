@@ -4,37 +4,37 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
-import lombok.Value;
-import ru.practicum.ewmmainservice.core.event.EventState;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import ru.practicum.ewmmainservice.core.event.Event;
 
 /**
- * DTO for {@link ru.practicum.ewmmainservice.core.event.Event}
+ * DTO for {@link Event}
  */
-@Value
-public class UpdateEventRequest implements Serializable {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class CreateEventDto implements Serializable {
 
-  Long id;
   @NotNull
   @Size(max = 2000)
   String annotation;
-  Integer confirmedRequests;
   @NotNull
-  Instant createdOn;
-  Instant publishedOn;
+  Long category;
   @NotNull
   @Size(max = 7000)
   String description;
   @NotNull
   Instant eventDate;
   @NotNull
-  Boolean paid;
-  Integer participantLimit;
-  @NotNull
-  EventState state;
-  Boolean requestModeration;
+  LocationDto location;
   @NotNull
   @Size(max = 120)
   String title;
   @NotNull
-  LocationDto location;
+  Boolean paid;
+  Integer participantLimit;
+  Boolean requestModeration;
 }
+

@@ -19,9 +19,9 @@ import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
-import ru.practicum.ewmmainservice.core.user.ParticipationRequest;
 import ru.practicum.ewmmainservice.core.category.Category;
 import ru.practicum.ewmmainservice.core.compilation.Compilation;
+import ru.practicum.ewmmainservice.core.participation.ParticipationRequest;
 import ru.practicum.ewmmainservice.core.user.User;
 
 @Getter

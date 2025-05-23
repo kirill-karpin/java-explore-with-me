@@ -2,18 +2,18 @@ package ru.practicum.ewmmainservice.core.event.service;
 
 import java.util.List;
 import ru.practicum.ewmmainservice.core.CRUDService;
-import ru.practicum.ewmmainservice.core.event.dto.CreateEventRequest;
+import ru.practicum.ewmmainservice.core.event.dto.CreateEventDto;
 import ru.practicum.ewmmainservice.core.event.dto.EventDto;
-import ru.practicum.ewmmainservice.core.event.dto.UpdateEventRequest;
+import ru.practicum.ewmmainservice.core.event.dto.UpdateEventDto;
 
 public interface EventService extends
-    CRUDService<Long, CreateEventRequest, UpdateEventRequest, EventDto> {
+    CRUDService<Long, CreateEventDto, UpdateEventDto, EventDto> {
 
   @Override
-  EventDto create(CreateEventRequest createEventRequest);
+  EventDto create(CreateEventDto createEventDto);
 
   @Override
-  EventDto update(Long id, UpdateEventRequest updateEventRequest);
+  EventDto update(Long id, UpdateEventDto updateEventDto);
 
   @Override
   void delete(Long id);
@@ -26,9 +26,11 @@ public interface EventService extends
   @Override
   EventDto getById(Long id);
 
-  EventDto createUserEvent(Long userId, CreateEventRequest request);
+  EventDto createUserEvent(Long userId, CreateEventDto request);
 
   EventDto getUserEventById(Long userId, Long eventId);
 
-  EventDto updateUserEventById(Long userId, Long eventId, UpdateEventRequest request);
+  EventDto updateUserEventById(Long userId, Long eventId, UpdateEventDto request);
+
+  List<EventDto> getUserEvents(Long userId);
 }

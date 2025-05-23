@@ -2,9 +2,12 @@ package ru.practicum.ewmmainservice.core.category;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import ru.practicum.ewmmainservice.core.category.dto.CreateCategoryRequest;
-import ru.practicum.ewmmainservice.core.category.dto.UpdateCategoryRequest;
+import ru.practicum.ewmmainservice.core.category.dto.CategoryDto;
+import ru.practicum.ewmmainservice.core.category.dto.CreateCategoryDto;
+import ru.practicum.ewmmainservice.core.category.dto.UpdateCategoryDto;
+import ru.practicum.ewmmainservice.core.exceptions.ConflictException;
 import ru.practicum.ewmmainservice.core.exceptions.NotFoundException;
 
 @Service
@@ -15,26 +18,34 @@ class CategoryServiceImpl implements CategoryService {
   private final CategoryMapper mapper;
 
   @Override
-  public CategoryDto create(CreateCategoryRequest createCategoryRequest) {
+  public CategoryDto create(CreateCategoryDto createCategoryDto) {
 
-    Category category = mapper.toEntity(createCategoryRequest);
-    Category createdCategory = categoryRepository.save(category);
+    Category category = mapper.toEntity(createCategoryDto);
+    try {
+      Category createdCategory = categoryRepository.save(category);
 
-    return mapper.toDto(createdCategory);
+      return mapper.toDto(createdCategory);
+    } catch (DataIntegrityViolationException e) {
+      throw new ConflictException("Integrity constraint has been violated", e.getMessage());
+    }
+
   }
 
   @Override
-  public CategoryDto update(Long categoryId, UpdateCategoryRequest updateCategoryRequest) {
+  public CategoryDto update(Long categoryId, UpdateCategoryDto updateCategoryDto) {
 
     categoryRepository.findById(categoryId)
         .orElseThrow(() -> new NotFoundException("Category not found"));
 
-    Category categoryToUpdate = mapper.toEntity(updateCategoryRequest);
+    Category categoryToUpdate = mapper.toEntity(updateCategoryDto);
     categoryToUpdate.setId(categoryId);
 
-    Category updatedCategory = categoryRepository.save(categoryToUpdate);
-
-    return mapper.toDto(updatedCategory);
+    try {
+      Category updatedCategory = categoryRepository.save(categoryToUpdate);
+      return mapper.toDto(updatedCategory);
+    } catch (DataIntegrityViolationException e) {
+      throw new ConflictException("Integrity constraint has been violated", e.getMessage());
+    }
   }
 
   @Override
@@ -43,7 +54,11 @@ class CategoryServiceImpl implements CategoryService {
     categoryRepository.findById(categoryId)
         .orElseThrow(() -> new NotFoundException("Category not found"));
 
-    categoryRepository.deleteById(categoryId);
+    try {
+      categoryRepository.deleteById(categoryId);
+    } catch (DataIntegrityViolationException e) {
+      throw new ConflictException("Integrity constraint has been violated", e.getMessage());
+    }
   }
 
   @Override

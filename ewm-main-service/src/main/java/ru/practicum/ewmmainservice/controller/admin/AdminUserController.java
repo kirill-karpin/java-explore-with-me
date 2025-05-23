@@ -18,7 +18,8 @@ import ru.practicum.ewmmainservice.core.user.dto.UserResponse;
 
 @RestController
 @Tags({
-    @Tag(name = "Admin: Пользователи", description = "Контроллер работы с пользователями")
+    @Tag(name = "Admin: Пользователи", description = "Контроллер работы с пользователями"),
+    @Tag(name = "admin"),
 })
 @RequestMapping("/admin/users")
 @RequiredArgsConstructor

@@ -12,9 +12,9 @@ import ru.practicum.ewmmainservice.core.event.Event;
 import ru.practicum.ewmmainservice.core.event.EventMapper;
 import ru.practicum.ewmmainservice.core.event.EventRepository;
 import ru.practicum.ewmmainservice.core.event.EventState;
-import ru.practicum.ewmmainservice.core.event.dto.CreateEventRequest;
+import ru.practicum.ewmmainservice.core.event.dto.CreateEventDto;
 import ru.practicum.ewmmainservice.core.event.dto.EventDto;
-import ru.practicum.ewmmainservice.core.event.dto.UpdateEventRequest;
+import ru.practicum.ewmmainservice.core.event.dto.UpdateEventDto;
 import ru.practicum.ewmmainservice.core.exceptions.NotFoundException;
 import ru.practicum.ewmmainservice.core.user.User;
 import ru.practicum.ewmmainservice.core.user.UserRepository;
@@ -29,19 +29,19 @@ class EventServiceImpl implements EventService {
   private final EventMapper mapper;
 
   @Override
-  public EventDto create(CreateEventRequest createEventRequest) {
-    Event event = mapper.toEntity(createEventRequest);
+  public EventDto create(CreateEventDto createEventDto) {
+    Event event = mapper.toEntity(createEventDto);
     Event savedEvent = eventRepository.save(event);
     return mapper.toDto(savedEvent);
   }
 
   @Override
-  public EventDto update(Long id, UpdateEventRequest updateEventRequest) {
-    eventRepository.findById(id)
+  public EventDto update(Long id, UpdateEventDto updateEventDto) {
+    Event event = eventRepository.findById(id)
         .orElseThrow(() -> new NotFoundException("Event not found"));
 
-    Event updatedEvent = mapper.toEntity(updateEventRequest);
-    updatedEvent.setId(id);
+    Event updatedEvent = mapper.partialUpdate(updateEventDto, event);
+
     return mapper.toDto(eventRepository.save(updatedEvent));
   }
 
@@ -60,15 +60,14 @@ class EventServiceImpl implements EventService {
 
   @Override
   public EventDto getById(Long id) {
-    return mapper.toDto(eventRepository.findById(id)
-        .orElseThrow(() -> new NotFoundException("Event not found")));
+    return mapper.toDto(
+        eventRepository.findById(id).orElseThrow(() -> new NotFoundException("Event not found")));
   }
 
   @Override
   public List<EventDto> getList(EventFilterParams filter) {
 
-    Specification<Event> spec = Specification
-        .where(EventSpecifications.hasTitle(filter.getText()))
+    Specification<Event> spec = Specification.where(EventSpecifications.hasTitle(filter.getText()))
         .and(EventSpecifications.isPaid(filter.getPaid()))
         .and(EventSpecifications.inCategories(filter.getCategories()))
         .and(EventSpecifications.dateBetween(filter.getRangeStart(), filter.getRangeEnd()))
@@ -80,7 +79,7 @@ class EventServiceImpl implements EventService {
   }
 
   @Override
-  public EventDto createUserEvent(Long userId, CreateEventRequest request) {
+  public EventDto createUserEvent(Long userId, CreateEventDto request) {
 
     User user = userRepository.findById(userId)
         .orElseThrow(() -> new NotFoundException("User not found"));
@@ -110,12 +109,20 @@ class EventServiceImpl implements EventService {
   }
 
   @Override
-  public EventDto updateUserEventById(Long userId, Long eventId, UpdateEventRequest request) {
+  public EventDto updateUserEventById(Long userId, Long eventId, UpdateEventDto request) {
 
     getUserEventById(userId, eventId);
 
     Event updateEvent = mapper.toEntity(request);
 
     return mapper.toDto(eventRepository.save(updateEvent));
+  }
+
+  @Override
+  public List<EventDto> getUserEvents(Long userId) {
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new NotFoundException("User not found"));
+
+    return eventRepository.findAllByInitiatorid(user).stream().map(mapper::toDto).toList();
   }
 }

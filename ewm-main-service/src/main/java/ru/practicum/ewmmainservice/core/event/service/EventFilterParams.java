@@ -26,7 +26,12 @@ public class EventFilterParams {
 
   private String sort = "VIEWS";
   private Integer from = 0;
+
   private Integer size = 10;
+
+  public void setSize(Integer size) {
+    this.size = size > 0 ? size : 10;
+  }
 
   public Pageable toPageable() {
     if (sort.equals("VIEWS")) {

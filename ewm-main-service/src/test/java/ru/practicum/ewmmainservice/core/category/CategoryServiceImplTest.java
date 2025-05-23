@@ -7,8 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import ru.practicum.ewmmainservice.core.category.dto.CreateCategoryRequest;
-import ru.practicum.ewmmainservice.core.category.dto.UpdateCategoryRequest;
+import ru.practicum.ewmmainservice.core.category.dto.CategoryDto;
+import ru.practicum.ewmmainservice.core.category.dto.CreateCategoryDto;
+import ru.practicum.ewmmainservice.core.category.dto.UpdateCategoryDto;
 
 @DataJpaTest
 @Import({CategoryServiceImpl.class, CategoryMapperImpl.class})
@@ -20,37 +21,37 @@ class CategoryServiceImplTest {
 
   @Test
   void create() {
-    CreateCategoryRequest createCategoryRequest = CreateCategoryRequest.builder().name("cat")
+    CreateCategoryDto createCategoryDto = CreateCategoryDto.builder().name("cat")
         .build();
 
-    CategoryDto categoryDto = categoryService.create(createCategoryRequest);
+    CategoryDto categoryDto = categoryService.create(createCategoryDto);
     assertNotNull(categoryDto);
   }
 
   @Test
   void update() {
-    CreateCategoryRequest createCategoryRequest = CreateCategoryRequest.builder().name("cat")
+    CreateCategoryDto createCategoryDto = CreateCategoryDto.builder().name("cat")
         .build();
 
-    CategoryDto categoryDto = categoryService.create(createCategoryRequest);
+    CategoryDto categoryDto = categoryService.create(createCategoryDto);
     assertNotNull(categoryDto);
-    UpdateCategoryRequest updateCategoryRequest = UpdateCategoryRequest.builder()
+    UpdateCategoryDto updateCategoryDto = UpdateCategoryDto.builder()
         .name("newCat")
         .build();
 
-    CategoryDto newCategoryDto = categoryService.update(categoryDto.getId(), updateCategoryRequest);
+    CategoryDto newCategoryDto = categoryService.update(categoryDto.getId(), updateCategoryDto);
 
-    assertEquals(newCategoryDto.getName(), "newCat");
+    assertEquals("newCat", newCategoryDto.getName());
 
   }
 
   @Test
   void delete() {
 
-    CreateCategoryRequest createCategoryRequest = CreateCategoryRequest.builder().name("cat")
+    CreateCategoryDto createCategoryDto = CreateCategoryDto.builder().name("cat")
         .build();
 
-    CategoryDto categoryDto = categoryService.create(createCategoryRequest);
+    CategoryDto categoryDto = categoryService.create(createCategoryDto);
     assertNotNull(categoryDto);
 
     categoryService.delete(categoryDto.getId());

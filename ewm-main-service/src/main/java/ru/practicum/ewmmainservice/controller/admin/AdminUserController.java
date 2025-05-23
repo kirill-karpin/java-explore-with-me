@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewmmainservice.core.user.UserService;
 import ru.practicum.ewmmainservice.core.user.dto.CreateUserRequest;
 import ru.practicum.ewmmainservice.core.user.dto.UpdateUserRequest;
-import ru.practicum.ewmmainservice.core.user.dto.UserResponse;
+import ru.practicum.ewmmainservice.core.user.dto.UserDto;
 
 @RestController
 @Tags({
@@ -28,17 +28,17 @@ class AdminUserController {
   private final UserService userService;
 
   @GetMapping
-  public List<UserResponse> getList() {
+  public List<UserDto> getList() {
     return userService.getList();
   }
 
   @PostMapping
-  public UserResponse post(@RequestBody CreateUserRequest createUserRequest) {
+  public UserDto post(@RequestBody CreateUserRequest createUserRequest) {
     return userService.create(createUserRequest);
   }
 
   @PatchMapping("/{userId}")
-  public UserResponse patch(@PathVariable Long userId,
+  public UserDto patch(@PathVariable Long userId,
       @RequestBody UpdateUserRequest updateUserRequest) {
     return userService.update(userId, updateUserRequest);
   }

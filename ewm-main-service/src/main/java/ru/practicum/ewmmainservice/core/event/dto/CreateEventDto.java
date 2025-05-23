@@ -1,5 +1,6 @@
 package ru.practicum.ewmmainservice.core.event.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.Instant;
@@ -25,6 +26,7 @@ public class CreateEventDto {
   @Size(max = 7000)
   String description;
   @NotNull
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
   Instant eventDate;
   @NotNull
   LocationDto location;

@@ -1,5 +1,7 @@
 package ru.practicum.ewmmainservice.controller.priv;
 
+import static org.springframework.http.HttpStatus.CREATED;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import java.util.List;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewmmainservice.core.event.dto.CreateEventDto;
 import ru.practicum.ewmmainservice.core.event.dto.EventDto;
@@ -32,6 +35,7 @@ class PrivateUsersController {
   }
 
   @PostMapping("/{userId}/events")
+  @ResponseStatus(CREATED)
   public EventDto createEvent(@PathVariable Long userId, @RequestBody CreateEventDto request) {
     return eventService.createUserEvent(userId, request);
   }

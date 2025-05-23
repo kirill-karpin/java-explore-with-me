@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.practicum.ewmmainservice.core.exceptions.NotFoundException;
 import ru.practicum.ewmmainservice.core.user.dto.CreateUserRequest;
 import ru.practicum.ewmmainservice.core.user.dto.UpdateUserRequest;
-import ru.practicum.ewmmainservice.core.user.dto.UserResponse;
+import ru.practicum.ewmmainservice.core.user.dto.UserDto;
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +16,7 @@ class UserServiceImpl implements UserService {
   private final UserMapper mapper;
 
   @Override
-  public UserResponse create(CreateUserRequest createUserRequest) {
+  public UserDto create(CreateUserRequest createUserRequest) {
 
     User user = mapper.toEntity(createUserRequest);
     User createdUser = userRepository.save(user);
@@ -25,7 +25,7 @@ class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserResponse update(Long userId, UpdateUserRequest updateUserRequest) {
+  public UserDto update(Long userId, UpdateUserRequest updateUserRequest) {
 
     userRepository.findById(userId)
         .orElseThrow(() -> new NotFoundException("User not found"));
@@ -48,7 +48,7 @@ class UserServiceImpl implements UserService {
   }
 
   @Override
-  public List<UserResponse> getList() {
+  public List<UserDto> getList() {
     return userRepository.findAll().stream().map(mapper::toDto).toList();
   }
 }

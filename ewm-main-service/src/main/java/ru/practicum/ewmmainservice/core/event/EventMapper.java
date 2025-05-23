@@ -34,8 +34,12 @@ public interface EventMapper {
   @Mapping(target = "createdOn", ignore = true)
   @Mapping(target = "publishedOn", ignore = true)
   @Mapping(target = "state", ignore = true)
+  @Mapping(target = "lat", source = "location.lat")
+  @Mapping(target = "lon", source = "location.lon")
   Event toEntity(CreateEventDto updateEventRequest);
 
+  @Mapping(source = "categoryid", target = "category")
+  @Mapping(source = "initiatorid", target = "initiator")
   @Mapping(target = "location.lat", source = "lat")
   @Mapping(target = "location.lon", source = "lon")
   EventDto toDto(Event event);

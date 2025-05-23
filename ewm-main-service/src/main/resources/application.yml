@@ -1,6 +1,10 @@
 server:
   port: '8080'
+
 spring:
+  jackson:
+    time-zone: UTC
+    date-format: yyyy-MM-dd HH:mm:ss
   application:
     name: ewm-main-service
   jpa:
@@ -39,3 +43,4 @@ logging:
       apache:
         http:
           wire=DEBUG:
+

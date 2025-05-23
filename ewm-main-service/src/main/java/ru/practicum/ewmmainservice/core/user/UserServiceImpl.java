@@ -3,7 +3,6 @@ package ru.practicum.ewmmainservice.core.user;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.practicum.ewmmainservice.core.event.dto.EventDto;
 import ru.practicum.ewmmainservice.core.exceptions.NotFoundException;
 import ru.practicum.ewmmainservice.core.user.dto.CreateUserRequest;
 import ru.practicum.ewmmainservice.core.user.dto.UpdateUserRequest;

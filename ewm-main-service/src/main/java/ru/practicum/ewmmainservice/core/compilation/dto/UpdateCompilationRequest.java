@@ -2,10 +2,7 @@ package ru.practicum.ewmmainservice.core.compilation.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import java.io.Serializable;
-import lombok.Data;
 import lombok.Value;
-import ru.practicum.ewmmainservice.core.compilation.Compilation;
 
 @Value
 public class UpdateCompilationRequest  {

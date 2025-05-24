@@ -7,8 +7,8 @@ import ru.practicum.ewmmainservice.core.event.EventMapper;
 @Mapper(componentModel = "spring", uses = {EventMapper.class})
 public interface ParticipationRequestMapper {
 
-  @Mapping(target = "eventid", source = "eventid.id")
-  @Mapping(target = "requesterid", source = "requesterid.id")
+  @Mapping(target = "event", source = "eventid.id")
+  @Mapping(target = "requester", source = "requesterid.id")
   ParticipationRequestDto toDto(ParticipationRequest participationRequest);
 
   /*@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

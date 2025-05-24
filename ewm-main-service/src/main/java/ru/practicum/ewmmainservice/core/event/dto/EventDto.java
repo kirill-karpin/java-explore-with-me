@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.Instant;
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.practicum.ewmmainservice.core.category.dto.CategoryDto;
 import ru.practicum.ewmmainservice.core.event.Event;
 import ru.practicum.ewmmainservice.core.user.dto.UserDto;
@@ -12,7 +14,9 @@ import ru.practicum.ewmmainservice.core.user.dto.UserDto;
 /**
  * DTO for {@link Event}
  */
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class EventDto {
 
   Long id;

@@ -8,6 +8,7 @@ spring:
   application:
     name: ewm-main-service
   jpa:
+    show-sql: true
     hibernate:
       ddl-auto: none
     properties:
@@ -28,12 +29,16 @@ logging:
   level:
     org:
       hibernate:
-        type:
-          descriptor:
-            sql:
-              BasicBinder: TRACE
+        orm:
+          jdbc:
+            bind: TRACE
+        type.descriptor.sql.BasicBinder: TRACE
         SQL: DEBUG
       springframework:
+        jdbc:
+          core:
+            StatementCreatorUtils : TRACE
+            JdbcTemplate: DEBUG
         orm:
           jpa:
             JpaTransactionManager: DEBUG
@@ -42,5 +47,4 @@ logging:
         web: DEBUG
       apache:
         http:
-          wire=DEBUG:
-
+          wire: DEBUG

@@ -78,7 +78,7 @@ public class Event {
 
   @NotNull
   @Column(name = "state", nullable = false, length = 50)
-  private EventState state;
+  private String state;
 
   @Column(name = "request_moderation")
   private Boolean requestModeration;

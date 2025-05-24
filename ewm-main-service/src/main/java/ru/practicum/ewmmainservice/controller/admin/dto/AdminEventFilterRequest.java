@@ -1,22 +1,24 @@
-package ru.practicum.ewmmainservice.core.event.service;
+package ru.practicum.ewmmainservice.controller.admin.dto;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Getter
-@Setter
-public class EventFilterParams {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class AdminEventFilterRequest {
 
-  private String text;
+  private List<Long> users;
+  private List<String> states;
   private List<Long> categories;
-  private Boolean paid;
-  private Boolean onlyAvailable = false;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime rangeStart;
@@ -24,9 +26,7 @@ public class EventFilterParams {
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime rangeEnd;
 
-  private String sort = "VIEWS";
   private Integer from = 0;
-
   private Integer size = 10;
 
   public void setSize(Integer size) {
@@ -34,11 +34,7 @@ public class EventFilterParams {
   }
 
   public Pageable toPageable() {
-    if (sort.equals("VIEWS")) {
-      return PageRequest.of(from / size, size, Sort.by("views").descending());
-    } else if (sort.equals("DATE")) {
-      return PageRequest.of(from / size, size, Sort.by("eventDate").descending());
-    }
     return PageRequest.of(from / size, size);
   }
+
 }

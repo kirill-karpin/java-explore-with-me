@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import ru.practicum.ewmmainservice.controller.admin.dto.AdminEventFilterRequest;
 import ru.practicum.ewmmainservice.core.category.Category;
 import ru.practicum.ewmmainservice.core.category.CategoryRepository;
 import ru.practicum.ewmmainservice.core.event.Event;
@@ -91,7 +92,7 @@ class EventServiceImpl implements EventService {
 
     event.setInitiatorid(user);
     event.setCategoryid(category);
-    event.setState(EventState.PENDING);
+    event.setState(EventState.PENDING.name());
     event.setCreatedOn(Instant.now());
 
     return mapper.toDto(eventRepository.save(event));
@@ -110,10 +111,13 @@ class EventServiceImpl implements EventService {
 
   @Override
   public EventDto updateUserEventById(Long userId, Long eventId, UpdateEventDto request) {
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new NotFoundException("user not found"));
 
-    getUserEventById(userId, eventId);
+    Event event = eventRepository.findByIdAndInitiatorid(eventId, user)
+        .orElseThrow(() -> new NotFoundException("Event not found"));
 
-    Event updateEvent = mapper.toEntity(request);
+    Event updateEvent = mapper.partialUpdate(request, event);
 
     return mapper.toDto(eventRepository.save(updateEvent));
   }
@@ -124,5 +128,19 @@ class EventServiceImpl implements EventService {
         .orElseThrow(() -> new NotFoundException("User not found"));
 
     return eventRepository.findAllByInitiatorid(user).stream().map(mapper::toDto).toList();
+  }
+
+  @Override
+  public List<EventDto> getList(AdminEventFilterRequest filter) {
+    Specification<Event> spec = Specification.where(
+            EventSpecifications.withUsers(filter.getUsers()))
+        .and(EventSpecifications.withStates(filter.getStates()))
+        .and(EventSpecifications.withCategories(filter.getCategories()))
+        .and(EventSpecifications.dateBetween(filter.getRangeStart(), filter.getRangeEnd()));
+
+    Pageable pageable = filter.toPageable();
+
+    return eventRepository.findAll(spec, pageable).stream().map(mapper::toDto).toList();
+
   }
 }

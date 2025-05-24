@@ -28,7 +28,7 @@ class ParticipationRequestServiceImpl implements ParticipationRequestService {
     Event eventFromDb = eventRepository.findById(eventId)
         .orElseThrow(() -> new NotFoundException("Event not found"));
 
-    if (eventFromDb.getState() != EventState.PUBLISHED) {
+    if (!eventFromDb.getState().equals(EventState.PUBLISHED.name())) {
       throw new ConflictException("Integrity constraint has been violated",
           "Event with id= " + eventId + " is not published");
     }

@@ -1,39 +1,51 @@
 package ru.practicum.ewmmainservice.core.event.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.Instant;
-import lombok.Value;
+import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.practicum.ewmmainservice.core.event.EventState;
+import ru.practicum.ewmmainservice.core.event.EventStateAction;
 
 /**
  * DTO for {@link ru.practicum.ewmmainservice.core.event.Event}
  */
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UpdateEventDto {
 
   Long id;
-  @NotNull
+  @Nullable
   @Size(max = 2000)
   String annotation;
   Integer confirmedRequests;
-  @NotNull
+  @Nullable
   Instant createdOn;
   Instant publishedOn;
-  @NotNull
+  @Nullable
   @Size(max = 7000)
   String description;
-  @NotNull
+
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
+  @Nullable
   Instant eventDate;
-  @NotNull
+
+  @Nullable
   Boolean paid;
   Integer participantLimit;
-  @NotNull
+  @Nullable
   EventState state;
   Boolean requestModeration;
-  @NotNull
+  @Nullable
   @Size(max = 120)
   String title;
-  @NotNull
+  @Nullable
   LocationDto location;
+  EventStateAction stateAction;
 }

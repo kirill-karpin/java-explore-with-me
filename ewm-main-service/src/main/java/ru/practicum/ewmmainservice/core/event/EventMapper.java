@@ -9,7 +9,7 @@ import ru.practicum.ewmmainservice.core.event.dto.CreateEventDto;
 import ru.practicum.ewmmainservice.core.event.dto.EventDto;
 import ru.practicum.ewmmainservice.core.event.dto.UpdateEventDto;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = StateMapper.class)
 public interface EventMapper {
 
 
@@ -47,13 +47,10 @@ public interface EventMapper {
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "lat", source = "location.lat")
   @Mapping(target = "lon", source = "location.lon")
+  @Mapping(target = "state", source = "stateAction", qualifiedByName = "stateActionToState")
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
   Event partialUpdate(
       UpdateEventDto updateEventDto, @MappingTarget Event event);
 
   Event toEntity(EventDto eventDto);
-
-  @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-  Event partialUpdate(
-      EventDto eventDto, @MappingTarget Event event);
 }

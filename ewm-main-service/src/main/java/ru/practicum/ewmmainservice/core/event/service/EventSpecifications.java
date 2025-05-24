@@ -1,9 +1,14 @@
 package ru.practicum.ewmmainservice.core.event.service;
 
+import jakarta.persistence.criteria.Join;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.data.jpa.domain.Specification;
+import ru.practicum.ewmmainservice.core.category.Category;
 import ru.practicum.ewmmainservice.core.event.Event;
+import ru.practicum.ewmmainservice.core.event.EventState;
 
 public class EventSpecifications {
 
@@ -43,4 +48,35 @@ public class EventSpecifications {
         onlyAvailable == null || !onlyAvailable ? null
             : cb.greaterThan(root.get("availableSeats"), 0);
   }
+
+  public static Specification<Event> withUsers(List<Long> userIds) {
+    return (root, query, cb) -> {
+      if (userIds == null || userIds.isEmpty() || (userIds.size() == 1 && userIds.get(0) == 0L)) {
+        return cb.conjunction(); // no filter
+      }
+      return root.get("initiatorid").get("id").in(userIds);
+    };
+  }
+
+  public static Specification<Event> withStates(List<String> states) {
+    return (root, query, cb) -> {
+      if (states == null || states.isEmpty()) {
+        return cb.conjunction(); // no filter
+      }
+      return root.get("state").in(states);
+    };
+  }
+
+  public static Specification<Event> withCategories(List<Long> categoryIds) {
+    return (root, query, cb) -> {
+      if (categoryIds == null || categoryIds.isEmpty() || (categoryIds.size() == 1
+          && categoryIds.get(0) == 0L)) {
+        return cb.conjunction();
+      }
+
+      Join<Event, Category> categoryJoin = root.join("categoryid");
+      return categoryJoin.get("id").in(categoryIds);
+    };
+  }
+
 }

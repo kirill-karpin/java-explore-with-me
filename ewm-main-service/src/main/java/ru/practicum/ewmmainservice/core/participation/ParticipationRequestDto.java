@@ -1,5 +1,6 @@
 package ru.practicum.ewmmainservice.core.participation;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
@@ -14,10 +15,11 @@ public class ParticipationRequestDto implements Serializable {
 
   Long id;
   @NotNull
-  Long eventid;
+  Long event;
   @NotNull
-  Long requesterid;
+  Long requester;
   @NotNull
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
   Instant created;
   @NotNull
   @Size(max = 50)

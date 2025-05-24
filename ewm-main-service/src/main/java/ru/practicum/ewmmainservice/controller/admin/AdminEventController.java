@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.practicum.ewmmainservice.controller.admin.dto.AdminEventFilterRequest;
 import ru.practicum.ewmmainservice.core.event.dto.EventDto;
 import ru.practicum.ewmmainservice.core.event.dto.UpdateEventDto;
 import ru.practicum.ewmmainservice.core.event.service.EventService;
@@ -26,8 +27,8 @@ class AdminEventController {
   private final EventService eventService;
 
   @GetMapping
-  public List<EventDto> get() {
-    return eventService.getList();
+  public List<EventDto> getList(AdminEventFilterRequest filter) {
+    return eventService.getList(filter);
   }
 
   @PatchMapping("/{eventId}")

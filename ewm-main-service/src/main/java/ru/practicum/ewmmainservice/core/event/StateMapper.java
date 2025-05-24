@@ -18,6 +18,8 @@ public class  StateMapper {
                 return EventState.CANCELED;
             case PUBLISH_EVENT:
                 return EventState.PUBLISHED;
+            case REJECT_EVENT:
+                return EventState.REJECTED;
             default:
                 throw new IllegalArgumentException("Unknown state action: " + stateAction);
         }
@@ -35,6 +37,8 @@ public class  StateMapper {
                 return EventStateAction.CANCEL_REVIEW;
             case PUBLISHED:
                 return EventStateAction.PUBLISH_EVENT;
+            case REJECTED:
+                return EventStateAction.REJECT_EVENT;
             default:
                 throw new IllegalArgumentException("Unknown state: " + state);
         }

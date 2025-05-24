@@ -1,14 +1,23 @@
 package ru.practicum.ewmmainservice.core.compilation.dto;
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Value;
+import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import ru.practicum.ewmmainservice.core.event.dto.EventDto;
 
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreateCompilationRequest {
 
-  Boolean pinned;
+  @Nullable
+  Boolean pinned = false;
   @NotNull
   @Size(max = 50)
   String title;
+  Set<Integer> events = Set.of();
 }

@@ -33,6 +33,16 @@ class ParticipationRequestServiceImpl implements ParticipationRequestService {
           "Event with id= " + eventId + " is not published");
     }
 
+    if (eventFromDb.getInitiatorid().getId().equals(userId)) {
+      throw new ConflictException("Нельзя отправить заявку на участие в событие, в котором вы не являетесь инициатором",
+          "Event with id= " + eventId );
+    }
+
+    if (eventFromDb.getParticipationRequests().size() == eventFromDb.getParticipantLimit()) {
+      throw new ConflictException("Достигнут лимит участников",
+          "Event with id= " + eventId );
+    }
+
     ParticipationRequest participationRequest = new ParticipationRequest();
     participationRequest.setRequesterid(userFromDb);
     participationRequest.setEventid(eventFromDb);

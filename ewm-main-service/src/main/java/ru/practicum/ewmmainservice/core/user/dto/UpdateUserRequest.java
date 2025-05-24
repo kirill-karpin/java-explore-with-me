@@ -8,7 +8,6 @@ import lombok.Value;
 
 @Data
 @Builder
-@Value
 public class UpdateUserRequest {
 
   Long id;
@@ -19,4 +18,6 @@ public class UpdateUserRequest {
 
   @NotNull
   String email;
+
+
 }

@@ -13,9 +13,11 @@ import ru.practicum.ewmmainservice.core.event.Event;
 import ru.practicum.ewmmainservice.core.event.EventMapper;
 import ru.practicum.ewmmainservice.core.event.EventRepository;
 import ru.practicum.ewmmainservice.core.event.EventState;
+import ru.practicum.ewmmainservice.core.event.EventStateAction;
 import ru.practicum.ewmmainservice.core.event.dto.CreateEventDto;
 import ru.practicum.ewmmainservice.core.event.dto.EventDto;
 import ru.practicum.ewmmainservice.core.event.dto.UpdateEventDto;
+import ru.practicum.ewmmainservice.core.exceptions.ConflictException;
 import ru.practicum.ewmmainservice.core.exceptions.NotFoundException;
 import ru.practicum.ewmmainservice.core.user.User;
 import ru.practicum.ewmmainservice.core.user.UserRepository;
@@ -40,6 +42,23 @@ class EventServiceImpl implements EventService {
   public EventDto update(Long id, UpdateEventDto updateEventDto) {
     Event event = eventRepository.findById(id)
         .orElseThrow(() -> new NotFoundException("Event not found"));
+
+    if (updateEventDto.getStateAction() != null) {
+      if (event.getState().equals(EventState.PUBLISHED.name()) &&
+          updateEventDto.getStateAction() == EventStateAction.PUBLISH_EVENT) {
+        throw new ConflictException("Событие уже опубликовано", "");
+      }
+
+      if (event.getState().equals(EventState.REJECTED.name()) &&
+          updateEventDto.getStateAction() == EventStateAction.PUBLISH_EVENT) {
+        throw new ConflictException("Нельзя опубликовать отклоненное событие", "");
+      }
+
+      if (event.getState().equals(EventState.PUBLISHED.name()) &&
+          updateEventDto.getStateAction() == EventStateAction.REJECT_EVENT) {
+        throw new ConflictException("Нельзя отклонить опубликованное событие", "");
+      }
+    }
 
     Event updatedEvent = mapper.partialUpdate(updateEventDto, event);
 

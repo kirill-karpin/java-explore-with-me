@@ -13,7 +13,6 @@ import ru.practicum.ewmmainservice.core.user.User;
  */
 @Data
 @AllArgsConstructor
-@Value
 public class UserDto implements Serializable {
 
   Long id;

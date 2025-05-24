@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.Instant;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.practicum.ewmmainservice.core.category.dto.CategoryDto;
@@ -17,6 +18,7 @@ import ru.practicum.ewmmainservice.core.user.dto.UserDto;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class EventDto {
 
   Long id;

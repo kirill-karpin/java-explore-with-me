@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.practicum.ewmmainservice.core.compilation.dto.CompilationDto;
 import ru.practicum.ewmmainservice.core.compilation.dto.CreateCompilationRequest;
 import ru.practicum.ewmmainservice.core.compilation.dto.UpdateCompilationRequest;
+import ru.practicum.ewmmainservice.core.event.EventRepository;
 import ru.practicum.ewmmainservice.core.exceptions.NotFoundException;
 
 @Service
@@ -14,6 +15,7 @@ class CompilationServiceImpl implements
     CompilationService {
 
   private final CompilationRepository compilationRepository;
+  private final EventRepository eventRepository;
   private final CompilationMapper mapper;
 
   @Override

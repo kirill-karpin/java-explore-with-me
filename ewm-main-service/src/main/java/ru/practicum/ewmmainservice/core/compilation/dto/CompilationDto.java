@@ -2,7 +2,6 @@ package ru.practicum.ewmmainservice.core.compilation.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import java.io.Serializable;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +15,7 @@ import ru.practicum.ewmmainservice.core.event.dto.EventDto;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CompilationDto implements Serializable {
+public class CompilationDto {
 
   Long id;
   @NotNull

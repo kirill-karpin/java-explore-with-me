@@ -2,7 +2,10 @@ package ru.practicum.ewmmainservice.core.user;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import ru.practicum.ewmmainservice.controller.admin.dto.AdminUserFilter;
 import ru.practicum.ewmmainservice.core.exceptions.NotFoundException;
 import ru.practicum.ewmmainservice.core.user.dto.CreateUserRequest;
 import ru.practicum.ewmmainservice.core.user.dto.UpdateUserRequest;
@@ -50,5 +53,17 @@ class UserServiceImpl implements UserService {
   @Override
   public List<UserDto> getList() {
     return userRepository.findAll().stream().map(mapper::toDto).toList();
+  }
+
+  @Override
+  public List<UserDto> getList(AdminUserFilter filter) {
+    Specification<User> spec = Specification.where(
+        UserSpecifications.inIds(filter.getIds())
+    );
+
+    Pageable pageable = filter.toPageable();
+
+    return userRepository.findAll(spec, pageable)
+        .stream().map(mapper::toDto).toList();
   }
 }

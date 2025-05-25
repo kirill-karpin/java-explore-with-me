@@ -112,4 +112,8 @@ public class Event {
   @Column(name = "views")
   private Long views;
 
+  public boolean isPublished() {
+    return state.equals(EventState.PUBLISHED.name());
+  }
+
 }

@@ -80,8 +80,14 @@ class EventServiceImpl implements EventService {
 
   @Override
   public EventDto getById(Long id) {
-    return mapper.toDto(
-        eventRepository.findById(id).orElseThrow(() -> new NotFoundException("Event not found")));
+    Event event = eventRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException("Event not found"));
+
+    if (!event.isPublished()) {
+      throw new NotFoundException("Событие не опубликовано");
+    }
+
+    return mapper.toDto(event);
   }
 
   @Override

@@ -28,6 +28,7 @@ class PrivateUsersRequestController {
 
   @GetMapping
   public List<ParticipationRequestDto> getRequests(@PathVariable Long userId) {
+
     return List.of();
   }
 

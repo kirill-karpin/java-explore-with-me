@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +18,7 @@ import ru.practicum.ewmmainservice.core.event.dto.CreateEventDto;
 import ru.practicum.ewmmainservice.core.event.dto.EventDto;
 import ru.practicum.ewmmainservice.core.event.dto.UpdateEventDto;
 import ru.practicum.ewmmainservice.core.event.service.EventService;
+import ru.practicum.ewmmainservice.core.participation.ParticipationRequestDto;
 
 @RestController
 @RequestMapping("/users")
@@ -53,14 +53,15 @@ class PrivateUsersController {
   }
 
   @GetMapping("/{userId}/events/{eventId}/requests")
-  public ResponseEntity<?> getEventRequests(@PathVariable Long userId, @PathVariable Long eventId) {
-    return ResponseEntity.ok("get user events");
+  public List<ParticipationRequestDto> getEventRequests(@PathVariable Long userId,
+      @PathVariable Long eventId) {
+    return List.of();
   }
 
   @PatchMapping("/{userId}/events/{eventId}/requests")
-  public ResponseEntity<?> updateEventRequests(@PathVariable Long userId,
+  public ParticipationRequestDto updateEventRequests(@PathVariable Long userId,
       @PathVariable Long eventId) {
-    return ResponseEntity.ok("get user events");
+    return null;
   }
 
 

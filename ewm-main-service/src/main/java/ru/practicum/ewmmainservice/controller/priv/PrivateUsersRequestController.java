@@ -2,8 +2,8 @@ package ru.practicum.ewmmainservice.controller.priv;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,8 +27,8 @@ class PrivateUsersRequestController {
   private final ParticipationRequestService participationRequestService;
 
   @GetMapping
-  public ResponseEntity<?> getRequests(@PathVariable Long userId) {
-    return ResponseEntity.ok("get user events");
+  public List<ParticipationRequestDto> getRequests(@PathVariable Long userId) {
+    return List.of();
   }
 
   @PostMapping

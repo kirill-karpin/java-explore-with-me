@@ -37,7 +37,7 @@ logging:
       springframework:
         jdbc:
           core:
-            StatementCreatorUtils : TRACE
+            StatementCreatorUtils: TRACE
             JdbcTemplate: DEBUG
         orm:
           jpa:

@@ -1,13 +1,11 @@
 package ru.practicum.ewmmainservice.core.compilation.dto;
 
 import jakarta.annotation.Nullable;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.practicum.ewmmainservice.core.event.dto.EventDto;
 
 @Data
 @AllArgsConstructor

@@ -34,13 +34,14 @@ class ParticipationRequestServiceImpl implements ParticipationRequestService {
     }
 
     if (eventFromDb.getInitiatorid().getId().equals(userId)) {
-      throw new ConflictException("Нельзя отправить заявку на участие в событие, в котором вы не являетесь инициатором",
-          "Event with id= " + eventId );
+      throw new ConflictException(
+          "Нельзя отправить заявку на участие в событие, в котором вы не являетесь инициатором",
+          "Event with id= " + eventId);
     }
 
     if (eventFromDb.getParticipationRequests().size() == eventFromDb.getParticipantLimit()) {
       throw new ConflictException("Достигнут лимит участников",
-          "Event with id= " + eventId );
+          "Event with id= " + eventId);
     }
 
     ParticipationRequest participationRequest = new ParticipationRequest();

@@ -1,14 +1,12 @@
 package ru.practicum.ewmmainservice.controller.admin.dto;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Data

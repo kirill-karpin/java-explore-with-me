@@ -2,13 +2,10 @@ package ru.practicum.ewmmainservice.core.event.service;
 
 import jakarta.persistence.criteria.Join;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.data.jpa.domain.Specification;
 import ru.practicum.ewmmainservice.core.category.Category;
 import ru.practicum.ewmmainservice.core.event.Event;
-import ru.practicum.ewmmainservice.core.event.EventState;
 
 public class EventSpecifications {
 

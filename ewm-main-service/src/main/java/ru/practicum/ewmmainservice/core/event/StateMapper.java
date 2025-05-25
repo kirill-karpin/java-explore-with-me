@@ -4,7 +4,7 @@ import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
 
 @Component
-public class  StateMapper {
+public class StateMapper {
 
     @Named("stateActionToState")
     EventState mapState(EventStateAction stateAction) {

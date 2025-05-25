@@ -13,8 +13,10 @@ interface UserMapper {
   UserDto toDto(User user);
 
   @Mapping(target = "id", ignore = true)
+  @Mapping(target = "participationRequests", ignore = true)
   User toEntity(CreateUserRequest userRequest);
 
+  @Mapping(target = "participationRequests", ignore = true)
   User toEntity(UpdateUserRequest userRequest);
 
 }

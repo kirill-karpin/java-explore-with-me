@@ -17,6 +17,7 @@ public interface CompilationMapper {
   @Mapping(target = "events", source = "events")
   CompilationDto toDto(Compilation compilation);
 
+  @Mapping(target = "id", ignore = true)
   @Mapping(target = "events", source = "events")
   Compilation toEntity(CreateCompilationRequest compilationDto);
 
@@ -30,9 +31,8 @@ public interface CompilationMapper {
 
     return eventIds.stream()
         .map(id -> {
-          Event event = Event.builder()
-              .id(id.longValue())
-              .build();
+          Event event = new Event();
+          event.setId(id.longValue());
 
           return event;
         })

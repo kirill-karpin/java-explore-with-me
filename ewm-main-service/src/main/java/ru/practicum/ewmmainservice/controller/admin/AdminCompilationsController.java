@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -32,7 +33,7 @@ class AdminCompilationsController {
 
   @PostMapping
   @ResponseStatus(CREATED)
-  public CompilationDto post(@RequestBody CreateCompilationRequest request) {
+  public CompilationDto post(@Valid @RequestBody CreateCompilationRequest request) {
     return compilationService.create(request);
   }
 
@@ -44,8 +45,7 @@ class AdminCompilationsController {
   }
 
   @PatchMapping("/{compId}")
-
-  public CompilationDto patch(@PathVariable Long compId, UpdateCompilationRequest request) {
+  public CompilationDto patch(@PathVariable Long compId,@Valid UpdateCompilationRequest request) {
     return compilationService.update(compId, request);
   }
 

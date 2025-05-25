@@ -22,6 +22,7 @@ class CompilationsController {
 
   @GetMapping
   public List<CompilationDto> getList() {
+
     return compilationsService.getList();
   }
 

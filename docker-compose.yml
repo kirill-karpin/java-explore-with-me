@@ -1,6 +1,7 @@
 services:
   stats-server:
     build: ewm-stats-service/stat-server
+    container_name: ewm-stats-server
     depends_on:
       - stats-db
     ports:

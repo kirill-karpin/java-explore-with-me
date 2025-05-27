@@ -24,7 +24,7 @@ spring:
     password: main
 app:
   client:
-    url: http://stats-server-container:9090
+    url: http://ewm-stats-server:9090
 logging:
   level:
     org:

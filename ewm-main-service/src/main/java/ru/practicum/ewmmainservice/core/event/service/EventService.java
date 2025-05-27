@@ -1,5 +1,6 @@
 package ru.practicum.ewmmainservice.core.event.service;
 
+import dto.HitDto;
 import java.util.List;
 import ru.practicum.ewmmainservice.controller.Paging;
 import ru.practicum.ewmmainservice.controller.admin.dto.AdminEventFilterRequest;
@@ -33,4 +34,6 @@ public interface EventService {
   List<EventDto> getList(AdminEventFilterRequest filter);
 
   List<ParticipationRequestDto> getUserEventRequests(Long userId, Long eventId);
+
+  void incrementViews(Long eventId, HitDto hitDto);
 }

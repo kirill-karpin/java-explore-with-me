@@ -1,7 +1,10 @@
 package ru.practicum.ewmmainservice.controller.pub;
 
+import dto.HitDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
+import jakarta.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +36,16 @@ class EventController {
   }
 
   @GetMapping("/{id}")
-  public EventDto getById(@PathVariable Long id) {
+  public EventDto getById(@PathVariable Long id, HttpServletRequest request) {
+    eventService.incrementViews(
+        id,
+        new HitDto(
+            "ewm-main-service",
+            request.getRequestURI(),
+            request.getRemoteAddr(),
+            LocalDateTime.now()
+        )
+    );
     return eventService.getById(id);
   }
 }

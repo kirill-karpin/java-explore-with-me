@@ -1,11 +1,14 @@
 package ru.practicum.ewmmainservice.core.event.service;
 
+import dto.HitDto;
+import dto.HitValue;
 import java.time.Instant;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import ru.practicum.client.StatClient;
 import ru.practicum.ewmmainservice.controller.Paging;
 import ru.practicum.ewmmainservice.controller.admin.dto.AdminEventFilterRequest;
 import ru.practicum.ewmmainservice.core.category.Category;
@@ -36,6 +39,7 @@ class EventServiceImpl implements EventService {
   private final ParticipationRequestRepository participationRequestRepository;
   private final EventMapper mapper;
   private final ParticipationRequestMapper participationRequestMapper;
+  private final StatClient statClient;
 
   @Override
   public EventDto create(CreateEventDto createEventDto) {
@@ -50,18 +54,18 @@ class EventServiceImpl implements EventService {
         .orElseThrow(() -> new NotFoundException("Event not found"));
 
     if (updateEventDto.getStateAction() != null) {
-      if (event.getState().equals(EventState.PUBLISHED.name()) &&
-          updateEventDto.getStateAction() == EventStateAction.PUBLISH_EVENT) {
+      if (event.getState().equals(EventState.PUBLISHED.name())
+          && updateEventDto.getStateAction() == EventStateAction.PUBLISH_EVENT) {
         throw new ConflictException("Событие уже опубликовано", "");
       }
 
-      if (event.getState().equals(EventState.REJECTED.name()) &&
-          updateEventDto.getStateAction() == EventStateAction.PUBLISH_EVENT) {
+      if (event.getState().equals(EventState.REJECTED.name())
+          && updateEventDto.getStateAction() == EventStateAction.PUBLISH_EVENT) {
         throw new ConflictException("Нельзя опубликовать отклоненное событие", "");
       }
 
-      if (event.getState().equals(EventState.PUBLISHED.name()) &&
-          updateEventDto.getStateAction() == EventStateAction.REJECT_EVENT) {
+      if (event.getState().equals(EventState.PUBLISHED.name())
+          && updateEventDto.getStateAction() == EventStateAction.REJECT_EVENT) {
         throw new ConflictException("Нельзя отклонить опубликованное событие", "");
       }
     }
@@ -195,8 +199,16 @@ class EventServiceImpl implements EventService {
       throw new NotFoundException("Это не ваше событие");
     }
 
-    return participationRequestRepository.getAllByEventid_Id(eventId)
-        .stream().map(participationRequestMapper::toDto).toList();
+    return participationRequestRepository.getAllByEventid_Id(eventId).stream()
+        .map(participationRequestMapper::toDto).toList();
 
+  }
+
+  @Override
+  public void incrementViews(Long eventId, HitDto hitDto) {
+    statClient.hit(hitDto);
+    List<HitValue> stats = statClient.getStatsList(null, null, List.of(hitDto.getUri()), true);
+    stats.stream().filter(stat -> stat.getUri().equals(hitDto.getUri())).findFirst()
+        .ifPresent(stat -> eventRepository.incrementViews(eventId, stat.getHits()));
   }
 }

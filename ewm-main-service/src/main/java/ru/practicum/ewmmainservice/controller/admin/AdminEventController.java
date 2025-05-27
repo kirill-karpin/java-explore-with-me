@@ -2,6 +2,7 @@ package ru.practicum.ewmmainservice.controller.admin;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +33,8 @@ class AdminEventController {
   }
 
   @PatchMapping("/{eventId}")
-  public EventDto update(@PathVariable Long eventId, @RequestBody UpdateEventDto updateEventDto) {
+  public EventDto update(@PathVariable Long eventId,
+      @Valid @RequestBody UpdateEventDto updateEventDto) {
     return eventService.update(eventId, updateEventDto);
   }
 }

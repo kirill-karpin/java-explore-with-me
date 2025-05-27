@@ -33,6 +33,10 @@ public class EventSpecifications {
   }
 
   public static Specification<Event> dateBetween(LocalDateTime start, LocalDateTime end) {
+
+    /*if (end.isBefore(start)) {
+      throw new ValidationException("End date cannot be before start date.");
+    }*/
     return (root, query, cb) -> {
       if (start == null && end == null) {
         return null;

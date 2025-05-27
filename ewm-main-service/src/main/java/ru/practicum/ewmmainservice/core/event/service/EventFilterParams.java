@@ -1,5 +1,6 @@
 package ru.practicum.ewmmainservice.core.event.service;
 
+import jakarta.validation.constraints.Positive;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Getter;
@@ -11,10 +12,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter
+@DateRange(start = "rangeStart", end = "rangeEnd")
 public class EventFilterParams {
 
   private String text;
-  private List<Long> categories;
+  private List<@Positive Long> categories;
   private Boolean paid;
   private Boolean onlyAvailable = false;
 

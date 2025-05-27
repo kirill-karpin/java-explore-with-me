@@ -4,6 +4,7 @@ import dto.HitDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ class EventController {
   private final EventService eventService;
 
   @GetMapping
-  public List<EventDto> getList(EventFilterParams filter) {
+  public List<EventDto> getList(@Valid EventFilterParams filter) {
 
     return eventService.getList(filter);
 

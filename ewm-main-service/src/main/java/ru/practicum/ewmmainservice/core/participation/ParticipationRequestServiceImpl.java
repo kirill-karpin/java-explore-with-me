@@ -40,7 +40,8 @@ class ParticipationRequestServiceImpl implements ParticipationRequestService {
           "Event with id= " + eventId);
     }
 
-    if (eventFromDb.getParticipationRequests().size() == eventFromDb.getParticipantLimit()) {
+    if (eventFromDb.getParticipantLimit() > 0
+        && eventFromDb.getParticipationRequests().size() == eventFromDb.getParticipantLimit()) {
       throw new ConflictException("Достигнут лимит участников",
           "Event with id= " + eventId);
     }
@@ -49,7 +50,11 @@ class ParticipationRequestServiceImpl implements ParticipationRequestService {
     participationRequest.setRequesterid(userFromDb);
     participationRequest.setEventid(eventFromDb);
     participationRequest.setCreated(Instant.now());
-    participationRequest.setStatus(ParticipationRequestStatus.PENDING);
+    if (eventFromDb.getParticipantLimit() == 0) {
+      participationRequest.setStatus(ParticipationRequestStatus.CONFIRMED);
+    } else {
+      participationRequest.setStatus(ParticipationRequestStatus.PENDING);
+    }
 
     try {
       return mapper.toDto(

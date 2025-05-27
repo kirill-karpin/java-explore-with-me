@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewmmainservice.core.compilation.CompilationService;
 import ru.practicum.ewmmainservice.core.compilation.dto.CompilationDto;
-import ru.practicum.ewmmainservice.core.compilation.dto.CreateCompilationRequest;
-import ru.practicum.ewmmainservice.core.compilation.dto.UpdateCompilationRequest;
+import ru.practicum.ewmmainservice.core.compilation.dto.CreateCompilationDto;
+import ru.practicum.ewmmainservice.core.compilation.dto.UpdateCompilationDto;
 
 @RestController
 @RequestMapping("/admin/compilations")
@@ -33,7 +33,7 @@ class AdminCompilationsController {
 
   @PostMapping
   @ResponseStatus(CREATED)
-  public CompilationDto post(@Valid @RequestBody CreateCompilationRequest request) {
+  public CompilationDto post(@Valid @RequestBody CreateCompilationDto request) {
     return compilationService.create(request);
   }
 
@@ -46,7 +46,7 @@ class AdminCompilationsController {
 
   @PatchMapping("/{compId}")
   public CompilationDto patch(@PathVariable Long compId,
-      @Valid @RequestBody UpdateCompilationRequest request) {
+      @Valid @RequestBody UpdateCompilationDto request) {
     return compilationService.update(compId, request);
   }
 

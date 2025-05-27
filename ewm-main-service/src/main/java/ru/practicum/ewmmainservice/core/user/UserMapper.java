@@ -3,8 +3,8 @@ package ru.practicum.ewmmainservice.core.user;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import ru.practicum.ewmmainservice.core.user.dto.CreateUserRequest;
-import ru.practicum.ewmmainservice.core.user.dto.UpdateUserRequest;
+import ru.practicum.ewmmainservice.core.user.dto.CreateUserDto;
+import ru.practicum.ewmmainservice.core.user.dto.UpdateUserDto;
 import ru.practicum.ewmmainservice.core.user.dto.UserDto;
 
 @Mapper(componentModel = "spring")
@@ -14,9 +14,9 @@ interface UserMapper {
 
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "participationRequests", ignore = true)
-  User toEntity(CreateUserRequest userRequest);
+  User toEntity(CreateUserDto userRequest);
 
   @Mapping(target = "participationRequests", ignore = true)
-  User toEntity(UpdateUserRequest userRequest);
+  User toEntity(UpdateUserDto userRequest);
 
 }

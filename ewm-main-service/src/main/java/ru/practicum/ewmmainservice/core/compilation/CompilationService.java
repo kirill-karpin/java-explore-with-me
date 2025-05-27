@@ -3,14 +3,14 @@ package ru.practicum.ewmmainservice.core.compilation;
 import java.util.List;
 import ru.practicum.ewmmainservice.controller.Paging;
 import ru.practicum.ewmmainservice.core.compilation.dto.CompilationDto;
-import ru.practicum.ewmmainservice.core.compilation.dto.CreateCompilationRequest;
-import ru.practicum.ewmmainservice.core.compilation.dto.UpdateCompilationRequest;
+import ru.practicum.ewmmainservice.core.compilation.dto.CreateCompilationDto;
+import ru.practicum.ewmmainservice.core.compilation.dto.UpdateCompilationDto;
 
 public interface CompilationService {
 
-  CompilationDto create(CreateCompilationRequest createCompilationRequest);
+  CompilationDto create(CreateCompilationDto createCompilationDto);
 
-  CompilationDto update(Long id, UpdateCompilationRequest updateCompilationRequest);
+  CompilationDto update(Long id, UpdateCompilationDto updateCompilationDto);
 
   void delete(Long id);
 

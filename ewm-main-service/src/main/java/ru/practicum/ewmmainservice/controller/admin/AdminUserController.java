@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewmmainservice.controller.admin.dto.AdminUserFilter;
 import ru.practicum.ewmmainservice.core.user.UserService;
-import ru.practicum.ewmmainservice.core.user.dto.CreateUserRequest;
-import ru.practicum.ewmmainservice.core.user.dto.UpdateUserRequest;
+import ru.practicum.ewmmainservice.core.user.dto.CreateUserDto;
+import ru.practicum.ewmmainservice.core.user.dto.UpdateUserDto;
 import ru.practicum.ewmmainservice.core.user.dto.UserDto;
 
 @RestController
@@ -42,14 +42,14 @@ class AdminUserController {
 
   @PostMapping
   @ResponseStatus(CREATED)
-  public UserDto post(@Valid @RequestBody CreateUserRequest createUserRequest) {
-    return userService.create(createUserRequest);
+  public UserDto post(@Valid @RequestBody CreateUserDto createUserDto) {
+    return userService.create(createUserDto);
   }
 
   @PatchMapping("/{userId}")
   public UserDto patch(@PathVariable Long userId,
-      @RequestBody UpdateUserRequest updateUserRequest) {
-    return userService.update(userId, updateUserRequest);
+      @RequestBody UpdateUserDto updateUserDto) {
+    return userService.update(userId, updateUserDto);
   }
 
   @DeleteMapping("/{userId}")

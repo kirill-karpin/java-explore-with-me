@@ -30,7 +30,7 @@ import ru.practicum.ewmmainservice.core.participation.ParticipationsList;
 @Tags({
     @Tag(name = "Private: События\n", description = "Закрытый API для работы с событиями пользователя")})
 @RequiredArgsConstructor
-class PrivateUsersController {
+class PrivateUserEventsController {
 
   private final EventService eventService;
   private final ParticipationRequestService participationRequestService;

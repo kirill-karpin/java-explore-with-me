@@ -26,7 +26,6 @@ class ParticipationRequestServiceImpl implements ParticipationRequestService {
   private final ParticipationRequestRepository participationRequestRepository;
 
   @Override
-  @Transactional
   public ParticipationRequestDto create(Long userId, Long eventId) {
     User userFromDb = userRepository.findById(userId)
         .orElseThrow(() -> new NotFoundException("User not found"));
@@ -46,7 +45,7 @@ class ParticipationRequestServiceImpl implements ParticipationRequestService {
     }
 
     if (eventFromDb.getParticipantLimit() > 0
-        && eventFromDb.getParticipationRequests().size() == eventFromDb.getParticipantLimit()) {
+        && eventFromDb.getConfirmedRequests().equals(eventFromDb.getParticipantLimit())) {
       throw new ConflictException("Достигнут лимит участников", "Event with id= " + eventId);
     }
 
@@ -54,7 +53,7 @@ class ParticipationRequestServiceImpl implements ParticipationRequestService {
     participationRequest.setRequesterid(userFromDb);
     participationRequest.setEventid(eventFromDb);
     participationRequest.setCreated(Instant.now());
-    if (eventFromDb.getParticipantLimit() == 0) {
+    if (eventFromDb.getParticipantLimit() == 0 || !eventFromDb.getRequestModeration()) {
       participationRequest.setStatus(ParticipationRequestStatus.CONFIRMED);
     } else {
       participationRequest.setStatus(ParticipationRequestStatus.PENDING);

@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class CreateUserRequest {
+public class CreateUserDto {
 
   @Size(max = 250, min = 2)
   @NotEmpty

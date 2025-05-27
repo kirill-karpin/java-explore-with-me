@@ -10,8 +10,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import ru.practicum.ewmmainservice.core.compilation.dto.CompilationDto;
-import ru.practicum.ewmmainservice.core.compilation.dto.CreateCompilationRequest;
-import ru.practicum.ewmmainservice.core.compilation.dto.UpdateCompilationRequest;
+import ru.practicum.ewmmainservice.core.compilation.dto.CreateCompilationDto;
+import ru.practicum.ewmmainservice.core.compilation.dto.UpdateCompilationDto;
 import ru.practicum.ewmmainservice.core.event.Event;
 
 @Mapper(componentModel = "spring")
@@ -22,14 +22,14 @@ public interface CompilationMapper {
 
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "events", source = "events")
-  Compilation toEntity(CreateCompilationRequest compilationDto);
+  Compilation toEntity(CreateCompilationDto compilationDto);
 
   @Mapping(target = "events", source = "events")
-  Compilation toEntity(UpdateCompilationRequest compilationDto);
+  Compilation toEntity(UpdateCompilationDto compilationDto);
 
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
   Compilation partialUpdate(
-      UpdateCompilationRequest compilationDto, @MappingTarget Compilation compilation);
+      UpdateCompilationDto compilationDto, @MappingTarget Compilation compilation);
 
   default Set<Event> mapEventIdsToEvents(Set<Integer> eventIds) {
     if (eventIds == null) {

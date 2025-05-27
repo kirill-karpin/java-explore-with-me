@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import ru.practicum.ewmmainservice.controller.admin.dto.AdminUserFilter;
 import ru.practicum.ewmmainservice.core.exceptions.ConflictException;
 import ru.practicum.ewmmainservice.core.exceptions.NotFoundException;
-import ru.practicum.ewmmainservice.core.user.dto.CreateUserRequest;
-import ru.practicum.ewmmainservice.core.user.dto.UpdateUserRequest;
+import ru.practicum.ewmmainservice.core.user.dto.CreateUserDto;
+import ru.practicum.ewmmainservice.core.user.dto.UpdateUserDto;
 import ru.practicum.ewmmainservice.core.user.dto.UserDto;
 
 @Service
@@ -21,9 +21,9 @@ class UserServiceImpl implements UserService {
   private final UserMapper mapper;
 
   @Override
-  public UserDto create(CreateUserRequest createUserRequest) {
+  public UserDto create(CreateUserDto createUserDto) {
 
-    User user = mapper.toEntity(createUserRequest);
+    User user = mapper.toEntity(createUserDto);
 
     try {
       User createdUser = userRepository.save(user);
@@ -35,12 +35,12 @@ class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserDto update(Long userId, UpdateUserRequest updateUserRequest) {
+  public UserDto update(Long userId, UpdateUserDto updateUserDto) {
 
     userRepository.findById(userId)
         .orElseThrow(() -> new NotFoundException("User not found"));
 
-    User userToUpdate = mapper.toEntity(updateUserRequest);
+    User userToUpdate = mapper.toEntity(updateUserDto);
     userToUpdate.setId(userId);
 
     User updatedCategory = userRepository.save(userToUpdate);

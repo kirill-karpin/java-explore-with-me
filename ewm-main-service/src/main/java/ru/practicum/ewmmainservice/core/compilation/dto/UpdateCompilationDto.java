@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateCompilationRequest {
+public class UpdateCompilationDto {
 
   Long id;
   @Nullable

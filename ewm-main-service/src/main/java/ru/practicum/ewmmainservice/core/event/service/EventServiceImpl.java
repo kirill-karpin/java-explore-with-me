@@ -20,6 +20,9 @@ import ru.practicum.ewmmainservice.core.event.dto.EventDto;
 import ru.practicum.ewmmainservice.core.event.dto.UpdateEventDto;
 import ru.practicum.ewmmainservice.core.exceptions.ConflictException;
 import ru.practicum.ewmmainservice.core.exceptions.NotFoundException;
+import ru.practicum.ewmmainservice.core.participation.ParticipationRequestDto;
+import ru.practicum.ewmmainservice.core.participation.ParticipationRequestMapper;
+import ru.practicum.ewmmainservice.core.participation.ParticipationRequestRepository;
 import ru.practicum.ewmmainservice.core.user.User;
 import ru.practicum.ewmmainservice.core.user.UserRepository;
 
@@ -30,7 +33,9 @@ class EventServiceImpl implements EventService {
   private final EventRepository eventRepository;
   private final UserRepository userRepository;
   private final CategoryRepository categoryRepository;
+  private final ParticipationRequestRepository participationRequestRepository;
   private final EventMapper mapper;
+  private final ParticipationRequestMapper participationRequestMapper;
 
   @Override
   public EventDto create(CreateEventDto createEventDto) {
@@ -94,7 +99,8 @@ class EventServiceImpl implements EventService {
   @Override
   public List<EventDto> getList(EventFilterParams filter) {
 
-    Specification<Event> spec = Specification.where(EventSpecifications.hasTitle(filter.getText()))
+    Specification<Event> spec = Specification.where(
+            EventSpecifications.hasAnnotation(filter.getText()))
         .and(EventSpecifications.isPaid(filter.getPaid()))
         .and(EventSpecifications.inCategories(filter.getCategories()))
         .and(EventSpecifications.dateBetween(filter.getRangeStart(), filter.getRangeEnd()))
@@ -120,6 +126,7 @@ class EventServiceImpl implements EventService {
     event.setCategoryid(category);
     event.setState(EventState.PENDING.name());
     event.setCreatedOn(Instant.now());
+    event.setViews(0L);
 
     return mapper.toDto(eventRepository.save(event));
   }
@@ -142,6 +149,10 @@ class EventServiceImpl implements EventService {
 
     Event event = eventRepository.findByIdAndInitiatorid(eventId, user)
         .orElseThrow(() -> new NotFoundException("Event not found"));
+
+    if (event.getState().equals(EventState.PUBLISHED.name())) {
+      throw new ConflictException("Нельзя изменить опубликованное событие", "");
+    }
 
     Event updateEvent = mapper.partialUpdate(request, event);
 
@@ -168,6 +179,24 @@ class EventServiceImpl implements EventService {
     Pageable pageable = filter.toPageable();
 
     return eventRepository.findAll(spec, pageable).stream().map(mapper::toDto).toList();
+
+  }
+
+  @Override
+  public List<ParticipationRequestDto> getUserEventRequests(Long userId, Long eventId) {
+
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new NotFoundException("User not found"));
+
+    Event event = eventRepository.findById(eventId)
+        .orElseThrow(() -> new NotFoundException("Event not found"));
+
+    if (!event.getInitiatorid().getId().equals(user.getId())) {
+      throw new NotFoundException("Это не ваше событие");
+    }
+
+    return participationRequestRepository.getAllByEventid_Id(eventId)
+        .stream().map(participationRequestMapper::toDto).toList();
 
   }
 }

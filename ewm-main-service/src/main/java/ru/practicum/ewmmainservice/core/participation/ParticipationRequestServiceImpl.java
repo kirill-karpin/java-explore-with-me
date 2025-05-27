@@ -1,6 +1,7 @@
 package ru.practicum.ewmmainservice.core.participation;
 
 import java.time.Instant;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewmmainservice.core.event.Event;
@@ -15,7 +16,7 @@ import ru.practicum.ewmmainservice.core.user.UserRepository;
 @Service
 class ParticipationRequestServiceImpl implements ParticipationRequestService {
 
-  private final ParticipationRequestMapper participationRequestMapper;
+  private final ParticipationRequestMapper mapper;
   private final UserRepository userRepository;
   private final EventRepository eventRepository;
   private final ParticipationRequestRepository participationRequestRepository;
@@ -51,7 +52,7 @@ class ParticipationRequestServiceImpl implements ParticipationRequestService {
     participationRequest.setStatus(ParticipationRequestStatus.PENDING);
 
     try {
-      return participationRequestMapper.toDto(
+      return mapper.toDto(
           participationRequestRepository.save(participationRequest)
       );
     } catch (Exception e) {
@@ -66,7 +67,13 @@ class ParticipationRequestServiceImpl implements ParticipationRequestService {
 
     participationRequest.setStatus(ParticipationRequestStatus.CANCELED);
 
-    return participationRequestMapper.toDto(
+    return mapper.toDto(
         participationRequestRepository.save(participationRequest));
+  }
+
+  @Override
+  public List<ParticipationRequestDto> getAllByUserId(Long userId) {
+    return participationRequestRepository.findAllByRequesterid_Id(userId).stream()
+        .map(mapper::toDto).toList();
   }
 }

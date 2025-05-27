@@ -58,7 +58,7 @@ class PrivateUsersController {
   @GetMapping("/{userId}/events/{eventId}/requests")
   public List<ParticipationRequestDto> getEventRequests(@PathVariable Long userId,
       @PathVariable Long eventId) {
-    return List.of();
+    return eventService.getUserEventRequests(userId, eventId);
   }
 
   @PatchMapping("/{userId}/events/{eventId}/requests")

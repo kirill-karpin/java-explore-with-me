@@ -15,6 +15,13 @@ public class EventSpecifications {
             : cb.like(cb.lower(root.get("title")), "%" + title.toLowerCase() + "%");
   }
 
+  public static Specification<Event> hasAnnotation(String annotation) {
+    return (root, query, cb) ->
+        annotation == null ? null
+            : cb.like(cb.lower(root.get("annotation")), "%" + annotation.toLowerCase() + "%");
+  }
+
+
   public static Specification<Event> isPaid(Boolean paid) {
     return (root, query, cb) ->
         paid == null ? null : cb.equal(root.get("paid"), paid);

@@ -6,6 +6,7 @@ import ru.practicum.ewmmainservice.controller.admin.dto.AdminEventFilterRequest;
 import ru.practicum.ewmmainservice.core.event.dto.CreateEventDto;
 import ru.practicum.ewmmainservice.core.event.dto.EventDto;
 import ru.practicum.ewmmainservice.core.event.dto.UpdateEventDto;
+import ru.practicum.ewmmainservice.core.participation.ParticipationRequestDto;
 
 public interface EventService {
 
@@ -30,4 +31,6 @@ public interface EventService {
   List<EventDto> getUserEvents(Long userId, Paging paging);
 
   List<EventDto> getList(AdminEventFilterRequest filter);
+
+  List<ParticipationRequestDto> getUserEventRequests(Long userId, Long eventId);
 }

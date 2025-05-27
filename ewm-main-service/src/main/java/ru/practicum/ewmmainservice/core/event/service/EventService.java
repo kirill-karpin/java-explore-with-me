@@ -36,4 +36,6 @@ public interface EventService {
   List<ParticipationRequestDto> getUserEventRequests(Long userId, Long eventId);
 
   void incrementViews(Long eventId, HitDto hitDto);
+
+  void incrementViews(HitDto hitDto);
 }

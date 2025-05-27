@@ -27,11 +27,19 @@ import ru.practicum.ewmmainservice.core.event.service.EventService;
 @RequiredArgsConstructor
 class EventController {
 
+  public static final String EWM_MAIN_SERVICE = "ewm-main-service";
   private final EventService eventService;
 
   @GetMapping
-  public List<EventDto> getList(@Valid EventFilterParams filter) {
-
+  public List<EventDto> getList(@Valid EventFilterParams filter, HttpServletRequest request) {
+    eventService.incrementViews(
+        new HitDto(
+            EWM_MAIN_SERVICE,
+            request.getRequestURI(),
+            request.getRemoteAddr(),
+            LocalDateTime.now()
+        )
+    );
     return eventService.getList(filter);
 
   }
@@ -41,7 +49,7 @@ class EventController {
     eventService.incrementViews(
         id,
         new HitDto(
-            "ewm-main-service",
+            EWM_MAIN_SERVICE,
             request.getRequestURI(),
             request.getRemoteAddr(),
             LocalDateTime.now()
@@ -49,4 +57,5 @@ class EventController {
     );
     return eventService.getById(id);
   }
+
 }

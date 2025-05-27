@@ -216,4 +216,9 @@ class EventServiceImpl implements EventService {
     stats.stream().filter(stat -> stat.getUri().equals(hitDto.getUri())).findFirst()
         .ifPresent(stat -> eventRepository.incrementViews(eventId, stat.getHits()));
   }
+
+  @Override
+  public void incrementViews(HitDto hitDto) {
+    statClient.hit(hitDto);
+  }
 }

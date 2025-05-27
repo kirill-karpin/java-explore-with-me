@@ -43,7 +43,7 @@ class ParticipationRequestServiceImpl implements ParticipationRequestService {
     }
 
     if (eventFromDb.getParticipantLimit() > 0
-        && eventFromDb.getConfirmedRequests() == eventFromDb.getParticipantLimit()) {
+        && eventFromDb.getConfirmedRequests().equals(eventFromDb.getParticipantLimit())) {
       throw new ConflictException("Достигнут лимит участников", "Event with id= " + eventId);
     }
 

@@ -2,6 +2,7 @@ package ru.practicum.ewmmainservice.core.event.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import java.time.Instant;
@@ -33,6 +34,7 @@ public class UpdateEventDto {
 
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
   @Nullable
+  @Future
   Instant eventDate;
 
   @Nullable

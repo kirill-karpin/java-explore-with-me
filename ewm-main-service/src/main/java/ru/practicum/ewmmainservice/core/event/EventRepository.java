@@ -1,5 +1,6 @@
 package ru.practicum.ewmmainservice.core.event;
 
+
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Pageable;
@@ -14,4 +15,6 @@ public interface EventRepository extends JpaRepository<Event, Long>,
   Optional<Event> findByIdAndInitiatorid(Long eventId, User initiatorId);
 
   List<Event> findAllByInitiatorid(User user, Pageable pageable);
+
+  Optional<Event> findByInitiatorid_IdAndId(Long userId, Long eventId);
 }

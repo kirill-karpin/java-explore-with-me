@@ -16,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewmmainservice.controller.Paging;
+import ru.practicum.ewmmainservice.controller.priv.dto.ParticipationConfirmDto;
 import ru.practicum.ewmmainservice.core.event.dto.CreateEventDto;
 import ru.practicum.ewmmainservice.core.event.dto.EventDto;
 import ru.practicum.ewmmainservice.core.event.dto.UpdateEventDto;
 import ru.practicum.ewmmainservice.core.event.service.EventService;
 import ru.practicum.ewmmainservice.core.participation.ParticipationRequestDto;
+import ru.practicum.ewmmainservice.core.participation.ParticipationRequestService;
+import ru.practicum.ewmmainservice.core.participation.ParticipationsList;
 
 @RestController
 @RequestMapping("/users")
@@ -30,6 +33,7 @@ import ru.practicum.ewmmainservice.core.participation.ParticipationRequestDto;
 class PrivateUsersController {
 
   private final EventService eventService;
+  private final ParticipationRequestService participationRequestService;
 
   @GetMapping("/{userId}/events")
   public List<EventDto> getUserEvents(@PathVariable Long userId, Paging paging) {
@@ -62,9 +66,9 @@ class PrivateUsersController {
   }
 
   @PatchMapping("/{userId}/events/{eventId}/requests")
-  public ParticipationRequestDto updateEventRequests(@PathVariable Long userId,
-      @PathVariable Long eventId) {
-    return null;
+  public ParticipationsList updateEventRequests(@PathVariable Long userId,
+      @PathVariable Long eventId, @RequestBody ParticipationConfirmDto request) {
+    return participationRequestService.confirmUserEventRequests(userId, eventId, request);
   }
 
 

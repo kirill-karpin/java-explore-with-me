@@ -4,6 +4,8 @@ import java.time.Instant;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.ewmmainservice.controller.priv.dto.ParticipationConfirmDto;
 import ru.practicum.ewmmainservice.core.event.Event;
 import ru.practicum.ewmmainservice.core.event.EventRepository;
 import ru.practicum.ewmmainservice.core.event.EventState;
@@ -41,9 +43,8 @@ class ParticipationRequestServiceImpl implements ParticipationRequestService {
     }
 
     if (eventFromDb.getParticipantLimit() > 0
-        && eventFromDb.getParticipationRequests().size() == eventFromDb.getParticipantLimit()) {
-      throw new ConflictException("Достигнут лимит участников",
-          "Event with id= " + eventId);
+        && eventFromDb.getConfirmedRequests() == eventFromDb.getParticipantLimit()) {
+      throw new ConflictException("Достигнут лимит участников", "Event with id= " + eventId);
     }
 
     ParticipationRequest participationRequest = new ParticipationRequest();
@@ -57,9 +58,7 @@ class ParticipationRequestServiceImpl implements ParticipationRequestService {
     }
 
     try {
-      return mapper.toDto(
-          participationRequestRepository.save(participationRequest)
-      );
+      return mapper.toDto(participationRequestRepository.save(participationRequest));
     } catch (Exception e) {
       throw new ConflictException("Integrity constraint has been violated", e.getMessage());
     }
@@ -67,18 +66,58 @@ class ParticipationRequestServiceImpl implements ParticipationRequestService {
 
   @Override
   public ParticipationRequestDto cancel(Long userId, Long requestId) {
-    ParticipationRequest participationRequest = participationRequestRepository
-        .findByIdAndRequesteridId(requestId, userId);
+    ParticipationRequest participationRequest = participationRequestRepository.findByIdAndRequesteridId(
+        requestId, userId);
 
     participationRequest.setStatus(ParticipationRequestStatus.CANCELED);
 
-    return mapper.toDto(
-        participationRequestRepository.save(participationRequest));
+    return mapper.toDto(participationRequestRepository.save(participationRequest));
   }
 
   @Override
   public List<ParticipationRequestDto> getAllByUserId(Long userId) {
     return participationRequestRepository.findAllByRequesterid_Id(userId).stream()
         .map(mapper::toDto).toList();
+  }
+
+  @Override
+  @Transactional
+  public ParticipationsList confirmUserEventRequests(Long userId, Long eventId,
+      ParticipationConfirmDto request) {
+
+    eventRepository.findByInitiatorid_IdAndId(userId, eventId)
+        .orElseThrow(() -> new NotFoundException("Event not found"));
+
+    List<ParticipationRequest> confirmRequests = participationRequestRepository.findAllByIdIn(
+        request.getRequestIds()).stream().peek(p -> {
+
+      if (p.getStatus().equals(ParticipationRequestStatus.CONFIRMED)) {
+        throw new ConflictException("Нельзя отменить уже принятую заявку на участие в событии", "");
+      }
+      p.setStatus(request.getStatus());
+    }).toList();
+
+    participationRequestRepository.saveAll(confirmRequests);
+    ParticipationsList participationsList = new ParticipationsList();
+
+    participationRequestRepository.findByEventid_Id(eventId).stream()
+        .forEach(p -> {
+          if (p.getStatus().equals(ParticipationRequestStatus.CONFIRMED)) {
+            participationsList.getConfirmedRequests().add(mapper.toDto(p));
+          } else if (p.getStatus().equals(ParticipationRequestStatus.PENDING)) {
+            participationsList.getPendingRequests().add(mapper.toDto(p));
+          } else if (p.getStatus().equals(ParticipationRequestStatus.REJECTED)) {
+            participationsList.getRejectedRequests().add(mapper.toDto(p));
+          }
+        });
+
+    Event eventSaved = eventRepository.findById(eventId)
+        .orElseThrow(() -> new NotFoundException("Event not found"));
+
+    if (eventSaved.getConfirmedRequests().equals(eventSaved.getParticipantLimit())) {
+      throw new ConflictException("Достигнут лимит участников", "");
+    }
+
+    return participationsList;
   }
 }

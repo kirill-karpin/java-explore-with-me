@@ -31,8 +31,8 @@ logging:
       hibernate:
         orm:
           jdbc:
-            bind: TRACE
-        type.descriptor.sql.BasicBinder: TRACE
+            bind: DEBUG
+        type.descriptor.sql.BasicBinder: DEBUG
         SQL: DEBUG
       springframework:
         jdbc:

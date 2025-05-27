@@ -5,12 +5,16 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * DTO for {@link ParticipationRequest}
  */
-@Value
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ParticipationRequestDto implements Serializable {
 
   Long id;

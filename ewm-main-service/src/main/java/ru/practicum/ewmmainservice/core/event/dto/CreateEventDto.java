@@ -1,6 +1,7 @@
 package ru.practicum.ewmmainservice.core.event.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -39,10 +40,12 @@ public class CreateEventDto {
   @NotNull
   @Size(max = 120, min = 3)
   String title;
-  @NotNull
+  @Nullable
   Boolean paid;
   @Min(0)
+  @Nullable
   Integer participantLimit;
+  @Nullable
   Boolean requestModeration;
 }
 

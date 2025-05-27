@@ -21,6 +21,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Formula;
 import ru.practicum.ewmmainservice.core.category.Category;
 import ru.practicum.ewmmainservice.core.compilation.Compilation;
 import ru.practicum.ewmmainservice.core.participation.ParticipationRequest;
@@ -48,9 +49,6 @@ public class Event {
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "categoryid", nullable = false)
   private Category categoryid;
-
-  @Column(name = "confirmed_requests")
-  private Integer confirmedRequests;
 
   @NotNull
   @Column(name = "created_on", nullable = false)
@@ -109,6 +107,10 @@ public class Event {
   @ColumnDefault("0")
   @Column(name = "views")
   private Long views;
+
+  @Formula("(SELECT COUNT(pr.requestid) FROM participation_requests pr "
+      + "WHERE pr.eventid = eventid AND pr.status = '3')")
+  private Integer confirmedRequests;
 
   public boolean isPublished() {
     return state.equals(EventState.PUBLISHED.name());

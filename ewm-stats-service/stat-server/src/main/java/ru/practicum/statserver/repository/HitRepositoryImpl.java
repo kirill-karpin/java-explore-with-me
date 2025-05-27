@@ -32,9 +32,8 @@ public class HitRepositoryImpl implements HitRepositoryCustom {
     Root<Hit> root = cq.from(Hit.class);
 
     List<Predicate> predicates = new ArrayList<>();
-    if (start != null && end != null) {
-      predicates.add(cb.between(root.get("created"), start, end));
-    }
+
+    predicates.add(cb.between(root.get("created"), start, end));
     if (uris != null && !uris.isEmpty()) {
       In<String> inClause = cb.in(root.get("uri"));
       for (String uri : uris) {
@@ -55,7 +54,7 @@ public class HitRepositoryImpl implements HitRepositoryCustom {
           cb.desc(cb.countDistinct(root.get("ip")))
       );
     } else {
-      cq.multiselect(root.get("app"), root.get("uri"), cb.count(root.get("id")));
+      cq.multiselect(root.get("app"), root.get("uri"), cb.count(root.get("ip")));
       cq.orderBy(
           cb.desc(cb.count(root.get("id")))
       );

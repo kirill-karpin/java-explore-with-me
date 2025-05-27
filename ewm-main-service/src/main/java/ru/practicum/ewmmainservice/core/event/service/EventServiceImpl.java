@@ -3,6 +3,7 @@ package ru.practicum.ewmmainservice.core.event.service;
 import dto.HitDto;
 import dto.HitValue;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -207,7 +208,11 @@ class EventServiceImpl implements EventService {
   @Override
   public void incrementViews(Long eventId, HitDto hitDto) {
     statClient.hit(hitDto);
-    List<HitValue> stats = statClient.getStatsList(null, null, List.of(hitDto.getUri()), true);
+    LocalDateTime start = LocalDateTime.now().minusYears(1);
+    LocalDateTime end = LocalDateTime.now().plusYears(1);
+    List<HitValue> stats = statClient.getStatsList(start,
+        end,
+        List.of(hitDto.getUri()), true);
     stats.stream().filter(stat -> stat.getUri().equals(hitDto.getUri())).findFirst()
         .ifPresent(stat -> eventRepository.incrementViews(eventId, stat.getHits()));
   }

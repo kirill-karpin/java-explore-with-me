@@ -23,13 +23,13 @@ public class CreateEventDto {
   @NotNull
   @NotEmpty
   @NotBlank
-  @Size(max = 2000)
+  @Size(max = 2000, min = 20)
   String annotation;
   @NotNull
   Long category;
   @NotEmpty
   @NotBlank
-  @Size(max = 7000)
+  @Size(max = 7000, min = 20)
   String description;
   @NotNull
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
@@ -37,7 +37,7 @@ public class CreateEventDto {
   @NotNull
   LocationDto location;
   @NotNull
-  @Size(max = 120)
+  @Size(max = 120, min = 3)
   String title;
   @NotNull
   Boolean paid;

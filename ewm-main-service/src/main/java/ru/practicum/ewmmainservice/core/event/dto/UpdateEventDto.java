@@ -21,14 +21,14 @@ public class UpdateEventDto {
 
   Long id;
   @Nullable
-  @Size(max = 2000)
+  @Size(max = 2000, min = 20)
   String annotation;
   Integer confirmedRequests;
   @Nullable
   Instant createdOn;
   Instant publishedOn;
   @Nullable
-  @Size(max = 7000)
+  @Size(max = 7000, min = 20)
   String description;
 
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
@@ -43,7 +43,7 @@ public class UpdateEventDto {
   EventState state;
   Boolean requestModeration;
   @Nullable
-  @Size(max = 120)
+  @Size(max = 120, min = 3)
   String title;
   @Nullable
   LocationDto location;

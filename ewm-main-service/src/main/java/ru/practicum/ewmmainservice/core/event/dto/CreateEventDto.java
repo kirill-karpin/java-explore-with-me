@@ -2,6 +2,7 @@ package ru.practicum.ewmmainservice.core.event.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -34,6 +35,7 @@ public class CreateEventDto {
   String description;
   @NotNull
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
+  @Future
   Instant eventDate;
   @NotNull
   LocationDto location;
@@ -41,11 +43,11 @@ public class CreateEventDto {
   @Size(max = 120, min = 3)
   String title;
   @Nullable
-  Boolean paid;
+  Boolean paid = false;
   @Min(0)
   @Nullable
-  Integer participantLimit;
+  Integer participantLimit = 0;
   @Nullable
-  Boolean requestModeration;
+  Boolean requestModeration = true;
 }
 

@@ -18,5 +18,5 @@ public class UpdateCompilationRequest {
   @Nullable
   @Size(max = 50)
   String title;
-  Set<Integer> events = Set.of();
+  Set<Integer> events;
 }

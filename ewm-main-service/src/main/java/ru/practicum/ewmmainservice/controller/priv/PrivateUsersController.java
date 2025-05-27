@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +37,8 @@ class PrivateUsersController {
 
   @PostMapping("/{userId}/events")
   @ResponseStatus(CREATED)
-  public EventDto createEvent(@PathVariable Long userId, @RequestBody CreateEventDto request) {
+  public EventDto createEvent(@PathVariable Long userId,
+      @Valid @RequestBody CreateEventDto request) {
     return eventService.createUserEvent(userId, request);
   }
 
@@ -47,7 +49,7 @@ class PrivateUsersController {
 
   @PatchMapping("/{userId}/events/{eventId}")
   public EventDto updateEventById(@PathVariable Long userId, @PathVariable Long eventId,
-      @RequestBody
+      @Valid @RequestBody
       UpdateEventDto request) {
     return eventService.updateUserEventById(userId, eventId, request);
   }

@@ -4,8 +4,11 @@ package ru.practicum.ewmmainservice.core.compilation;
 import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 import ru.practicum.ewmmainservice.core.compilation.dto.CompilationDto;
 import ru.practicum.ewmmainservice.core.compilation.dto.CreateCompilationRequest;
 import ru.practicum.ewmmainservice.core.compilation.dto.UpdateCompilationRequest;
@@ -23,6 +26,10 @@ public interface CompilationMapper {
 
   @Mapping(target = "events", source = "events")
   Compilation toEntity(UpdateCompilationRequest compilationDto);
+
+  @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+  Compilation partialUpdate(
+      UpdateCompilationRequest compilationDto, @MappingTarget Compilation compilation);
 
   default Set<Event> mapEventIdsToEvents(Set<Integer> eventIds) {
     if (eventIds == null) {

@@ -49,4 +49,5 @@ public class EventDto {
   LocationDto location;
   CategoryDto category;
   UserDto initiator;
+  Long views;
 }

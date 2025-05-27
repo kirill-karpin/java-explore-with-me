@@ -26,12 +26,13 @@ class CompilationServiceImpl implements
 
   @Override
   public CompilationDto update(Long id, UpdateCompilationRequest updateCompilationRequest) {
-    compilationRepository.findById(id)
+    Compilation compilation = compilationRepository.findById(id)
         .orElseThrow(() -> new NotFoundException("Compilation not found"));
 
-    Compilation compilation = mapper.toEntity(updateCompilationRequest);
-    compilation.setId(id);
-    return mapper.toDto(compilationRepository.save(compilation));
+    Compilation compilationUpdate = mapper.partialUpdate(updateCompilationRequest, compilation);
+
+    var result = compilationRepository.save(compilationUpdate);
+    return mapper.toDto(result);
   }
 
   @Override

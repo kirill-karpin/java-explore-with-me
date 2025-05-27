@@ -2,6 +2,7 @@ package ru.practicum.ewmmainservice.core.event.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import java.time.Instant;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,7 @@ public class UpdateEventDto {
 
   @Nullable
   Boolean paid;
+  @Positive
   Integer participantLimit;
   @Nullable
   EventState state;

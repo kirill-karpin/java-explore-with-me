@@ -1,5 +1,6 @@
 package ru.practicum.ewmmainservice.core.participation;
 
+import jakarta.persistence.EntityManager;
 import java.time.Instant;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +19,14 @@ import ru.practicum.ewmmainservice.core.user.UserRepository;
 @Service
 class ParticipationRequestServiceImpl implements ParticipationRequestService {
 
+  private final EntityManager entityManager;
   private final ParticipationRequestMapper mapper;
   private final UserRepository userRepository;
   private final EventRepository eventRepository;
   private final ParticipationRequestRepository participationRequestRepository;
 
   @Override
+  @Transactional
   public ParticipationRequestDto create(Long userId, Long eventId) {
     User userFromDb = userRepository.findById(userId)
         .orElseThrow(() -> new NotFoundException("User not found"));
@@ -43,7 +46,7 @@ class ParticipationRequestServiceImpl implements ParticipationRequestService {
     }
 
     if (eventFromDb.getParticipantLimit() > 0
-        && eventFromDb.getConfirmedRequests().equals(eventFromDb.getParticipantLimit())) {
+        && eventFromDb.getParticipationRequests().size() == eventFromDb.getParticipantLimit()) {
       throw new ConflictException("Достигнут лимит участников", "Event with id= " + eventId);
     }
 
@@ -58,7 +61,11 @@ class ParticipationRequestServiceImpl implements ParticipationRequestService {
     }
 
     try {
-      return mapper.toDto(participationRequestRepository.save(participationRequest));
+
+      ParticipationRequest participationRequestSaved = participationRequestRepository.save(
+          participationRequest);
+
+      return mapper.toDto(participationRequestSaved);
     } catch (Exception e) {
       throw new ConflictException("Integrity constraint has been violated", e.getMessage());
     }

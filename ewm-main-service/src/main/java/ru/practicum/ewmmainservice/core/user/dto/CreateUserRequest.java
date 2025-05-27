@@ -11,12 +11,13 @@ import lombok.Data;
 @Builder
 public class CreateUserRequest {
 
-  @Size(max = 250)
+  @Size(max = 250, min = 2)
   @NotEmpty
   @NotBlank
   String name;
 
   @NotEmpty
   @Email
+  @Size(max = 254, min = 6)
   String email;
 }

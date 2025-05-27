@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.practicum.ewmmainservice.controller.Paging;
 import ru.practicum.ewmmainservice.core.compilation.CompilationService;
 import ru.practicum.ewmmainservice.core.compilation.dto.CompilationDto;
 
@@ -21,9 +22,9 @@ class CompilationsController {
   private final CompilationService compilationsService;
 
   @GetMapping
-  public List<CompilationDto> getList() {
+  public List<CompilationDto> getList(Paging paging) {
 
-    return compilationsService.getList();
+    return compilationsService.getList(paging);
   }
 
   @GetMapping("/{compId}")

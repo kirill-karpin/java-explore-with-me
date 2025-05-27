@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import ru.practicum.ewmmainservice.controller.Paging;
 import ru.practicum.ewmmainservice.controller.admin.dto.AdminEventFilterRequest;
 import ru.practicum.ewmmainservice.core.category.Category;
 import ru.practicum.ewmmainservice.core.category.CategoryRepository;
@@ -148,11 +149,12 @@ class EventServiceImpl implements EventService {
   }
 
   @Override
-  public List<EventDto> getUserEvents(Long userId) {
+  public List<EventDto> getUserEvents(Long userId, Paging paging) {
     User user = userRepository.findById(userId)
         .orElseThrow(() -> new NotFoundException("User not found"));
 
-    return eventRepository.findAllByInitiatorid(user).stream().map(mapper::toDto).toList();
+    return eventRepository.findAllByInitiatorid(user, paging.toPageable()).stream()
+        .map(mapper::toDto).toList();
   }
 
   @Override

@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import ru.practicum.ewmmainservice.controller.Paging;
 import ru.practicum.ewmmainservice.core.category.dto.CategoryDto;
 import ru.practicum.ewmmainservice.core.category.dto.CreateCategoryDto;
 import ru.practicum.ewmmainservice.core.category.dto.UpdateCategoryDto;
@@ -62,8 +63,8 @@ class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
-  public List<CategoryDto> getList() {
-    return categoryRepository.findAll()
+  public List<CategoryDto> getList(Paging paging) {
+    return categoryRepository.findAll(paging.toPageable())
         .stream()
         .map(mapper::toDto)
         .toList();

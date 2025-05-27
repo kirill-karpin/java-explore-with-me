@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import ru.practicum.ewmmainservice.controller.Paging;
 import ru.practicum.ewmmainservice.core.event.dto.CreateEventDto;
 import ru.practicum.ewmmainservice.core.event.dto.EventDto;
 import ru.practicum.ewmmainservice.core.event.dto.UpdateEventDto;
@@ -31,8 +32,8 @@ class PrivateUsersController {
   private final EventService eventService;
 
   @GetMapping("/{userId}/events")
-  public List<EventDto> getUserEvents(@PathVariable Long userId) {
-    return eventService.getUserEvents(userId);
+  public List<EventDto> getUserEvents(@PathVariable Long userId, Paging paging) {
+    return eventService.getUserEvents(userId, paging);
   }
 
   @PostMapping("/{userId}/events")

@@ -2,10 +2,12 @@ package ru.practicum.ewmmainservice.core.user;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewmmainservice.controller.admin.dto.AdminUserFilter;
+import ru.practicum.ewmmainservice.core.exceptions.ConflictException;
 import ru.practicum.ewmmainservice.core.exceptions.NotFoundException;
 import ru.practicum.ewmmainservice.core.user.dto.CreateUserRequest;
 import ru.practicum.ewmmainservice.core.user.dto.UpdateUserRequest;
@@ -22,9 +24,14 @@ class UserServiceImpl implements UserService {
   public UserDto create(CreateUserRequest createUserRequest) {
 
     User user = mapper.toEntity(createUserRequest);
-    User createdUser = userRepository.save(user);
 
-    return mapper.toDto(createdUser);
+    try {
+      User createdUser = userRepository.save(user);
+
+      return mapper.toDto(createdUser);
+    } catch (DataIntegrityViolationException e) {
+      throw new ConflictException("Integrity constraint has been violated", e.getMessage());
+    }
   }
 
   @Override

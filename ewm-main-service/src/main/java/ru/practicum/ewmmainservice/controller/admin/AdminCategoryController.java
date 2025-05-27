@@ -2,6 +2,7 @@ package ru.practicum.ewmmainservice.controller.admin;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,13 +37,13 @@ class AdminCategoryController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public CategoryDto post(@RequestBody CreateCategoryDto createCategoryDto) {
+  public CategoryDto post(@RequestBody @Valid CreateCategoryDto createCategoryDto) {
     return categoryService.create(createCategoryDto);
   }
 
   @PatchMapping("/{catId}")
   public CategoryDto updateCategory(@PathVariable Long catId,
-      @RequestBody UpdateCategoryDto updateCategoryDto) {
+      @Valid @RequestBody UpdateCategoryDto updateCategoryDto) {
     return categoryService.update(catId, updateCategoryDto);
   }
 }

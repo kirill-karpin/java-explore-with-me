@@ -3,6 +3,7 @@ package ru.practicum.ewmmainservice.core.compilation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.practicum.ewmmainservice.controller.Paging;
 import ru.practicum.ewmmainservice.core.compilation.dto.CompilationDto;
 import ru.practicum.ewmmainservice.core.compilation.dto.CreateCompilationRequest;
 import ru.practicum.ewmmainservice.core.compilation.dto.UpdateCompilationRequest;
@@ -43,8 +44,8 @@ class CompilationServiceImpl implements
   }
 
   @Override
-  public List<CompilationDto> getList() {
-    return compilationRepository.findAll()
+  public List<CompilationDto> getList(Paging paging) {
+    return compilationRepository.findAll(paging.toPageable())
         .stream()
         .map(mapper::toDto).toList();
   }

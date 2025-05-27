@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.practicum.ewmmainservice.controller.Paging;
 import ru.practicum.ewmmainservice.core.category.CategoryService;
 import ru.practicum.ewmmainservice.core.category.dto.CategoryDto;
 
@@ -20,8 +21,8 @@ class CategoryController {
   private final CategoryService categoryService;
 
   @GetMapping
-  public List<CategoryDto> get() {
-    return categoryService.getList();
+  public List<CategoryDto> get(Paging paging) {
+    return categoryService.getList(paging);
   }
 
   @GetMapping("/{categoryId}")

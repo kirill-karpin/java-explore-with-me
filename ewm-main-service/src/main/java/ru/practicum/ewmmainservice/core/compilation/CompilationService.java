@@ -1,6 +1,7 @@
 package ru.practicum.ewmmainservice.core.compilation;
 
 import java.util.List;
+import ru.practicum.ewmmainservice.controller.Paging;
 import ru.practicum.ewmmainservice.core.compilation.dto.CompilationDto;
 import ru.practicum.ewmmainservice.core.compilation.dto.CreateCompilationRequest;
 import ru.practicum.ewmmainservice.core.compilation.dto.UpdateCompilationRequest;
@@ -13,7 +14,7 @@ public interface CompilationService {
 
   void delete(Long id);
 
-  List<CompilationDto> getList();
+  List<CompilationDto> getList(Paging paging);
 
   CompilationDto getById(Long id);
 }

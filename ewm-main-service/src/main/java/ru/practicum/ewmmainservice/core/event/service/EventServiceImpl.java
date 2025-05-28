@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.client.StatClient;
 import ru.practicum.ewmmainservice.controller.Paging;
 import ru.practicum.ewmmainservice.controller.admin.dto.AdminEventFilterRequest;
@@ -206,6 +207,7 @@ class EventServiceImpl implements EventService {
   }
 
   @Override
+  @Transactional
   public void incrementViews(Long eventId, HitDto hitDto) {
     statClient.hit(hitDto);
     LocalDateTime start = LocalDateTime.now().minusYears(1);

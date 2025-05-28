@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateCompilationDto {
 
-  Long id;
+  private Long id;
   @Nullable
-  Boolean pinned;
+  private Boolean pinned;
   @Nullable
   @Size(max = 50)
-  String title;
-  Set<Integer> events;
+  private String title;
+  private Set<Integer> events;
 }

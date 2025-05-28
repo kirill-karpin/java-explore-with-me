@@ -4,6 +4,7 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.time.LocalDateTime;
 import org.springframework.beans.BeanWrapperImpl;
+import ru.practicum.ewmmainservice.core.exceptions.ValidationException;
 
 public class DateRangeValidator implements ConstraintValidator<DateRange, Object> {
 
@@ -30,7 +31,7 @@ public class DateRangeValidator implements ConstraintValidator<DateRange, Object
 
       return start.isBefore(end);
     } catch (Exception e) {
-      return false;
+      throw new ValidationException("Дата начала не может быть позже даты окончания");
     }
   }
 }

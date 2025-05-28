@@ -19,9 +19,9 @@ public class CompilationDto {
 
   Long id;
   @NotNull
-  Boolean pinned;
+  private Boolean pinned;
   @NotNull
   @Size(max = 50)
-  String title;
-  Set<EventDto> events;
+  private String title;
+  private Set<EventDto> events;
 }

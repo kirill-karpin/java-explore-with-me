@@ -2,15 +2,17 @@ package ru.practicum.ewmmainservice.core.category;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 @DataJpaTest
+@RequiredArgsConstructor
 class CategoryRepositoryTest {
 
   @Autowired
-  CategoryRepository categoryRepository;
+  private final CategoryRepository categoryRepository;
 
   @Test
   public void setCategoryRepository() {

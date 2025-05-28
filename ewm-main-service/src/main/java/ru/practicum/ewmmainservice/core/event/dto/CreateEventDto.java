@@ -26,28 +26,28 @@ public class CreateEventDto {
   @NotEmpty
   @NotBlank
   @Size(max = 2000, min = 20)
-  String annotation;
+  private String annotation;
   @NotNull
-  Long category;
+  private Long category;
   @NotEmpty
   @NotBlank
   @Size(max = 7000, min = 20)
-  String description;
+  private String description;
   @NotNull
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
   @Future
-  Instant eventDate;
+  private Instant eventDate;
   @NotNull
-  LocationDto location;
+  private LocationDto location;
   @NotNull
   @Size(max = 120, min = 3)
-  String title;
+  private String title;
   @Nullable
-  Boolean paid = false;
+  private Boolean paid = false;
   @Min(0)
   @Nullable
-  Integer participantLimit = 0;
+  private Integer participantLimit = 0;
   @Nullable
-  Boolean requestModeration = true;
+  private Boolean requestModeration = true;
 }
 

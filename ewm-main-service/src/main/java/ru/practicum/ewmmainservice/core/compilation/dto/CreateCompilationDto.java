@@ -15,10 +15,10 @@ import lombok.NoArgsConstructor;
 public class CreateCompilationDto {
 
   @Nullable
-  Boolean pinned = false;
+  private Boolean pinned = false;
   @NotNull
   @NotBlank
   @Size(max = 50)
-  String title;
-  Set<Integer> events = Set.of();
+  private String title;
+  private Set<Integer> events = Set.of();
 }

@@ -3,6 +3,7 @@ package ru.practicum.ewmmainservice.core.category;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -13,14 +14,15 @@ import ru.practicum.ewmmainservice.core.category.dto.UpdateCategoryDto;
 
 @DataJpaTest
 @Import({CategoryServiceImpl.class, CategoryMapperImpl.class})
+@RequiredArgsConstructor
 class CategoryServiceImplTest {
 
   @Autowired
-  CategoryService categoryService;
+  private final CategoryService categoryService;
 
 
   @Test
-  void create() {
+  public void create() {
     CreateCategoryDto createCategoryDto = CreateCategoryDto.builder().name("cat")
         .build();
 
@@ -29,7 +31,7 @@ class CategoryServiceImplTest {
   }
 
   @Test
-  void update() {
+  public void update() {
     CreateCategoryDto createCategoryDto = CreateCategoryDto.builder().name("cat")
         .build();
 
@@ -46,7 +48,7 @@ class CategoryServiceImplTest {
   }
 
   @Test
-  void delete() {
+  public void delete() {
 
     CreateCategoryDto createCategoryDto = CreateCategoryDto.builder().name("cat")
         .build();

@@ -14,12 +14,12 @@ import ru.practicum.ewmmainservice.core.user.User;
 @AllArgsConstructor
 public class UserDto implements Serializable {
 
-  Long id;
+  private Long id;
 
   @Size(max = 250)
   @NotNull
-  String name;
+  private String name;
 
   @NotNull
-  String email;
+  private String email;
 }

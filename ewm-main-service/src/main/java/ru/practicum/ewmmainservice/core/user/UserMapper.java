@@ -8,7 +8,7 @@ import ru.practicum.ewmmainservice.core.user.dto.UpdateUserDto;
 import ru.practicum.ewmmainservice.core.user.dto.UserDto;
 
 @Mapper(componentModel = "spring")
-interface UserMapper {
+public interface UserMapper {
 
   UserDto toDto(User user);
 

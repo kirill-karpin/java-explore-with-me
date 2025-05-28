@@ -14,10 +14,10 @@ public class CreateUserDto {
   @Size(max = 250, min = 2)
   @NotEmpty
   @NotBlank
-  String name;
+  private String name;
 
   @NotEmpty
   @Email
   @Size(max = 254, min = 6)
-  String email;
+  private String email;
 }

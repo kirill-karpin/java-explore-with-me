@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class StateMapper {
 
     @Named("stateActionToState")
-    EventState mapState(EventStateAction stateAction) {
+    public EventState mapState(EventStateAction stateAction) {
         if (stateAction == null) {
             return null;
         }
@@ -26,7 +26,7 @@ public class StateMapper {
     }
 
     @Named("stateToStateAction")
-    EventStateAction mapStateAction(EventState state) {
+    public EventStateAction mapStateAction(EventState state) {
         if (state == null) {
             return null;
         }

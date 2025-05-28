@@ -17,15 +17,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ParticipationRequestDto implements Serializable {
 
-  Long id;
+  private Long id;
   @NotNull
-  Long event;
+  private Long event;
   @NotNull
-  Long requester;
+  private Long requester;
   @NotNull
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
-  Instant created;
+  private Instant created;
   @NotNull
   @Size(max = 50)
-  String status;
+  private String status;
 }

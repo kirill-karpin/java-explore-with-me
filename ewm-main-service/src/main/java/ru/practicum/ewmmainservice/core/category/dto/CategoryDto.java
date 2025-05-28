@@ -3,19 +3,23 @@ package ru.practicum.ewmmainservice.core.category.dto;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Value;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.practicum.ewmmainservice.core.category.Category;
 
 /**
  * DTO for {@link Category}
  */
 @Builder
-@Value
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CategoryDto implements Serializable {
 
-  Long id;
+  private Long id;
   @NotNull
-  @Size(max = 50)
+  private @Size(max = 50)
   String name;
 }

@@ -24,30 +24,30 @@ public class EventDto {
   Long id;
   @NotNull
   @Size(max = 2000)
-  String annotation;
-  Integer confirmedRequests;
+  private String annotation;
+  private Integer confirmedRequests;
   @NotNull
-  Instant createdOn;
-  Instant publishedOn;
+  private Instant createdOn;
+  private Instant publishedOn;
   @NotNull
   @Size(max = 7000)
-  String description;
+  private String description;
   @NotNull
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  Instant eventDate;
+  private Instant eventDate;
   @NotNull
-  Boolean paid;
-  Integer participantLimit;
+  private Boolean paid;
+  private Integer participantLimit;
   @NotNull
   @Size(max = 50)
-  String state;
-  Boolean requestModeration;
+  private String state;
+  private Boolean requestModeration;
   @NotNull
   @Size(max = 120)
-  String title;
+  private String title;
   @NotNull
-  LocationDto location;
-  CategoryDto category;
-  UserDto initiator;
-  Long views;
+  private LocationDto location;
+  private CategoryDto category;
+  private UserDto initiator;
+  private Long views;
 }

@@ -9,14 +9,14 @@ import lombok.Data;
 @Builder
 public class UpdateUserDto {
 
-  Long id;
+  private Long id;
 
   @Size(max = 250)
   @NotNull
-  String name;
+  private String name;
 
   @NotNull
-  String email;
+  private String email;
 
 
 }

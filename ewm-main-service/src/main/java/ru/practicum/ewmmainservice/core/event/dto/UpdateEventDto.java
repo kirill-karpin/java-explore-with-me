@@ -23,31 +23,31 @@ public class UpdateEventDto {
   Long id;
   @Nullable
   @Size(max = 2000, min = 20)
-  String annotation;
-  Integer confirmedRequests;
+  private String annotation;
+  private Integer confirmedRequests;
   @Nullable
-  Instant createdOn;
-  Instant publishedOn;
+  private Instant createdOn;
+  private Instant publishedOn;
   @Nullable
   @Size(max = 7000, min = 20)
-  String description;
+  private String description;
 
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
   @Nullable
   @Future
-  Instant eventDate;
+  private Instant eventDate;
 
   @Nullable
-  Boolean paid;
+  private Boolean paid;
   @Positive
-  Integer participantLimit;
+  private Integer participantLimit;
   @Nullable
-  EventState state;
-  Boolean requestModeration;
+  private EventState state;
+  private Boolean requestModeration;
   @Nullable
   @Size(max = 120, min = 3)
-  String title;
+  private String title;
   @Nullable
-  LocationDto location;
-  EventStateAction stateAction;
+  private LocationDto location;
+  private EventStateAction stateAction;
 }

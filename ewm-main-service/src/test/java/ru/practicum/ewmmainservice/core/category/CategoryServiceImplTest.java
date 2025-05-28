@@ -14,12 +14,10 @@ import ru.practicum.ewmmainservice.core.category.dto.UpdateCategoryDto;
 
 @DataJpaTest
 @Import({CategoryServiceImpl.class, CategoryMapperImpl.class})
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 class CategoryServiceImplTest {
 
-  @Autowired
   private final CategoryService categoryService;
-
 
   @Test
   public void create() {

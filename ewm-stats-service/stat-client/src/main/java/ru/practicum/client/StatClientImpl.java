@@ -1,8 +1,10 @@
 package ru.practicum.client;
 
+import dto.HitDto;
 import dto.HitValue;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClient;
 
@@ -20,7 +22,7 @@ public class StatClientImpl implements StatClient {
   public List<HitValue> getStatsList(LocalDateTime start, LocalDateTime end, List<String> uris,
       Boolean unique) {
 
-    ResponseEntity<List> response = restClient.get()
+    ResponseEntity<List<HitValue>> response = restClient.get()
         .uri(uriBuilder -> uriBuilder
             .path("/stats")
             .queryParam("start", start)
@@ -30,9 +32,19 @@ public class StatClientImpl implements StatClient {
             .build())
         .header("Content-Type", "application/json")
         .retrieve()
-        .toEntity(List.class);
+        .toEntity(new ParameterizedTypeReference<>() {
+        });
 
     return response.getBody();
   }
 
+  @Override
+  public void hit(HitDto hitDto) {
+    restClient.post()
+        .uri("/hit")
+        .header("Content-Type", "application/json")
+        .body(hitDto)
+        .retrieve()
+        .toBodilessEntity();
+  }
 }

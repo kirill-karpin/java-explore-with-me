@@ -18,28 +18,28 @@ public class Like {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "likeid", nullable = false)
+  @Column(name = "likeId", nullable = false)
   private Long id;
 
-  @Column(name = "entitytype", length = Integer.MAX_VALUE)
+  @Column(name = "entityType", length = Integer.MAX_VALUE)
   private String entityType;
 
-  @Column(name = "entityid")
+  @Column(name = "entityId")
   private Long entityId;
 
-  @Column(name = "value")
+  @Column(name = "val")
   private Long value;
 
-  @Column(name = "createdat")
+  @Column(name = "createdAt")
   private Instant createdAt;
 
-  @Column(name = "userid")
+  @Column(name = "userId")
   private Long userId;
 
   @Column(name = "message", length = Integer.MAX_VALUE)
   private String message;
 
-  @Column(name = "updatedat")
+  @Column(name = "updatedAt")
   private Instant updatedAt;
 
 }

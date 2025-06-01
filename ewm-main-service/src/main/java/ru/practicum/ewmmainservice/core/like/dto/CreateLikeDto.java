@@ -2,7 +2,6 @@ package ru.practicum.ewmmainservice.core.like.dto;
 
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.time.Instant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +13,7 @@ import ru.practicum.ewmmainservice.core.like.EntityTypeEnum;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CreateLikeDto implements Serializable {
+public class CreateLikeDto {
 
   @NotNull
   private EntityTypeEnum entityType;

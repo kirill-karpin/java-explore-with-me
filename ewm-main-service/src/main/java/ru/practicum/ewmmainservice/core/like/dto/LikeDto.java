@@ -1,6 +1,5 @@
 package ru.practicum.ewmmainservice.core.like.dto;
 
-import java.io.Serializable;
 import java.time.Instant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +13,7 @@ import ru.practicum.ewmmainservice.core.like.Like;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LikeDto implements Serializable {
+public class LikeDto {
 
   private Long id;
   private EntityTypeEnum entityType;

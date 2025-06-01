@@ -58,4 +58,8 @@ class EventController {
     return eventService.getById(id);
   }
 
+  @GetMapping("/most-popular")
+  public List<EventDto> getMostPopular() {
+    return eventService.getMostPopular();
+  }
 }

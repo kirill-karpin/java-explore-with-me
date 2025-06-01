@@ -25,6 +25,10 @@ import ru.practicum.ewmmainservice.core.event.dto.EventDto;
 import ru.practicum.ewmmainservice.core.event.dto.UpdateEventDto;
 import ru.practicum.ewmmainservice.core.exceptions.ConflictException;
 import ru.practicum.ewmmainservice.core.exceptions.NotFoundException;
+import ru.practicum.ewmmainservice.core.like.EntityTypeEnum;
+import ru.practicum.ewmmainservice.core.like.dto.CreateLikeDto;
+import ru.practicum.ewmmainservice.core.like.dto.LikeDto;
+import ru.practicum.ewmmainservice.core.like.service.LikeService;
 import ru.practicum.ewmmainservice.core.participation.ParticipationRequestDto;
 import ru.practicum.ewmmainservice.core.participation.ParticipationRequestMapper;
 import ru.practicum.ewmmainservice.core.participation.ParticipationRequestRepository;
@@ -42,6 +46,7 @@ class EventServiceImpl implements EventService {
   private final EventMapper mapper;
   private final ParticipationRequestMapper participationRequestMapper;
   private final StatClient statClient;
+  private final LikeService likeService;
 
   @Override
   public EventDto create(CreateEventDto createEventDto) {
@@ -222,5 +227,43 @@ class EventServiceImpl implements EventService {
   @Override
   public void incrementViews(HitDto hitDto) {
     statClient.hit(hitDto);
+  }
+
+  @Override
+  public LikeDto likeEvent(Long userId, Long eventId) {
+    userRepository.findById(userId)
+        .orElseThrow(() -> new NotFoundException("User not found"));
+
+    eventRepository.findById(eventId)
+        .orElseThrow(() -> new NotFoundException("Event not found"));
+
+    CreateLikeDto createLikeDto = CreateLikeDto.builder()
+        .entityId(eventId)
+        .entityType(EntityTypeEnum.EVENT)
+        .userId(userId)
+        .value(1L)
+        .createdAt(Instant.now())
+        .updatedAt(Instant.now())
+        .build();
+    try {
+      return likeService.likeEntity(createLikeDto);
+    } catch (RuntimeException e) {
+      throw new ConflictException("Ошибка повторный лайк", e.getMessage());
+    }
+  }
+
+  @Override
+  public void deleteLike(Long userId, Long likeId) {
+    try {
+      likeService.deleteLike(userId, likeId);
+    } catch (RuntimeException e) {
+      throw new ConflictException("Ошибка удаления лайка", "");
+    }
+  }
+
+  @Override
+  public List<EventDto> getMostPopular() {
+
+    return List.of();
   }
 }

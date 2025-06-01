@@ -7,6 +7,7 @@ import ru.practicum.ewmmainservice.controller.admin.dto.AdminEventFilterRequest;
 import ru.practicum.ewmmainservice.core.event.dto.CreateEventDto;
 import ru.practicum.ewmmainservice.core.event.dto.EventDto;
 import ru.practicum.ewmmainservice.core.event.dto.UpdateEventDto;
+import ru.practicum.ewmmainservice.core.like.dto.LikeDto;
 import ru.practicum.ewmmainservice.core.participation.ParticipationRequestDto;
 
 public interface EventService {
@@ -38,4 +39,10 @@ public interface EventService {
   void incrementViews(Long eventId, HitDto hitDto);
 
   void incrementViews(HitDto hitDto);
+
+  LikeDto likeEvent(Long userId, Long eventId);
+
+  void deleteLike(Long userId, Long likeId);
+
+  List<EventDto> getMostPopular();
 }

@@ -69,8 +69,9 @@ create table if not exists likes
     CONSTRAINT user_like_per_entity UNIQUE (entity_id, entity_type, user_id)
 );
 
-create or replace view rating_likes(entity_type, entity_id, total) as
-SELECT entity_type,
+create or replace view rating_likes as
+SELECT row_number() OVER () AS "id",
+       entity_type,
        entity_id,
        sum(val) AS total
 FROM likes

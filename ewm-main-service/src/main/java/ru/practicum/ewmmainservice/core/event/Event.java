@@ -112,6 +112,9 @@ public class Event {
       + "WHERE pr.eventid = eventid AND pr.status = '3')")
   private Integer confirmedRequests;
 
+  @Formula("(SELECT rl.total FROM rating_likes rl WHERE rl.entity_id = eventid AND rl.entity_type = 'EVENT')")
+  private Integer rating;
+
   public boolean isPublished() {
     return state.equals(EventState.PUBLISHED.name());
   }

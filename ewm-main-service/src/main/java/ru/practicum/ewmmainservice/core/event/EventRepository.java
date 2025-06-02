@@ -23,4 +23,6 @@ public interface EventRepository extends JpaRepository<Event, Long>,
   @Modifying
   @Query("UPDATE Event e SET e.views = :views WHERE e.id = :eventId")
   void incrementViews(Long eventId, Long views);
+
+  List<Event> findAllByIdInOrderByViewsDesc(List<Long> eventIds);
 }

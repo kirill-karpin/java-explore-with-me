@@ -20,7 +20,7 @@ import org.hibernate.annotations.Immutable;
 public class RatingLikes {
 
   @Id
-  @Column(nullable = false)
+  @Column(nullable = true)
   private Long id;
 
   @Column(name = "entityType")

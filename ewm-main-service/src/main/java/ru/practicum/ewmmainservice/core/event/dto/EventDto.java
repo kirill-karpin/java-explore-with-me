@@ -50,4 +50,6 @@ public class EventDto {
   private CategoryDto category;
   private UserDto initiator;
   private Long views;
+  private Integer rating;
+
 }

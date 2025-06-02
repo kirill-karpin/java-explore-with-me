@@ -32,6 +32,8 @@ import ru.practicum.ewmmainservice.core.like.service.LikeService;
 import ru.practicum.ewmmainservice.core.participation.ParticipationRequestDto;
 import ru.practicum.ewmmainservice.core.participation.ParticipationRequestMapper;
 import ru.practicum.ewmmainservice.core.participation.ParticipationRequestRepository;
+import ru.practicum.ewmmainservice.core.rating.RatingLikes;
+import ru.practicum.ewmmainservice.core.rating.RatingLikesService;
 import ru.practicum.ewmmainservice.core.user.User;
 import ru.practicum.ewmmainservice.core.user.UserRepository;
 
@@ -47,6 +49,7 @@ class EventServiceImpl implements EventService {
   private final ParticipationRequestMapper participationRequestMapper;
   private final StatClient statClient;
   private final LikeService likeService;
+  private final RatingLikesService ratingLikesService;
 
   @Override
   public EventDto create(CreateEventDto createEventDto) {
@@ -263,7 +266,13 @@ class EventServiceImpl implements EventService {
 
   @Override
   public List<EventDto> getMostPopular() {
-
-    return List.of();
+    List<RatingLikes> ratingLikes = ratingLikesService.getTop10EventsByLikesAllTime();
+    List<Long> eventIds = ratingLikes.stream().map(RatingLikes::getId).toList();
+    if (eventIds.isEmpty()) {
+      return List.of();
+    }
+    var result = eventRepository.findAllByIdInOrderByViewsDesc(eventIds).stream()
+        .map(mapper::toDto).toList();
+    return result;
   }
 }

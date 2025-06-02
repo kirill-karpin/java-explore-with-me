@@ -237,8 +237,12 @@ class EventServiceImpl implements EventService {
     userRepository.findById(userId)
         .orElseThrow(() -> new NotFoundException("User not found"));
 
-    eventRepository.findById(eventId)
+    Event event = eventRepository.findById(eventId)
         .orElseThrow(() -> new NotFoundException("Event not found"));
+
+    if (!event.isPublished()) {
+      throw new NotFoundException("Событие не опубликовано");
+    }
 
     CreateLikeDto createLikeDto = CreateLikeDto.builder()
         .entityId(eventId)
@@ -267,12 +271,11 @@ class EventServiceImpl implements EventService {
   @Override
   public List<EventDto> getMostPopular() {
     List<RatingLikes> ratingLikes = ratingLikesService.getTop10EventsByLikesAllTime();
-    List<Long> eventIds = ratingLikes.stream().map(RatingLikes::getId).toList();
+    List<Long> eventIds = ratingLikes.stream().map(RatingLikes::getEntityId).toList();
     if (eventIds.isEmpty()) {
       return List.of();
     }
-    var result = eventRepository.findAllByIdInOrderByViewsDesc(eventIds).stream()
+    return eventRepository.findAllByIdInOrderByRatingDesc(eventIds).stream()
         .map(mapper::toDto).toList();
-    return result;
   }
 }

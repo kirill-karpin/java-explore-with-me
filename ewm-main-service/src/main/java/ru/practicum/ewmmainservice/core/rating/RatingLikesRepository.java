@@ -8,5 +8,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 public interface RatingLikesRepository extends JpaRepository<RatingLikes, Long>,
     JpaSpecificationExecutor<RatingLikes> {
 
-  List<RatingLikes> getAllByEntityType(String entityTypeEnum, Pageable pageable);
+
+  List<RatingLikes> getAllByEntityTypeOrderByTotalDesc(String name, Pageable pageable);
 }

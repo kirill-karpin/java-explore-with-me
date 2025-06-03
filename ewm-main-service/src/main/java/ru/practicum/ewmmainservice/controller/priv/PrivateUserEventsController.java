@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,9 +23,11 @@ import ru.practicum.ewmmainservice.core.event.dto.CreateEventDto;
 import ru.practicum.ewmmainservice.core.event.dto.EventDto;
 import ru.practicum.ewmmainservice.core.event.dto.UpdateEventDto;
 import ru.practicum.ewmmainservice.core.event.service.EventService;
+import ru.practicum.ewmmainservice.core.like.dto.LikeDto;
 import ru.practicum.ewmmainservice.core.participation.ParticipationRequestDto;
 import ru.practicum.ewmmainservice.core.participation.ParticipationRequestService;
 import ru.practicum.ewmmainservice.core.participation.ParticipationsList;
+import ru.practicum.ewmmainservice.core.user.UserService;
 
 @RestController
 @RequestMapping("/users")
@@ -34,6 +38,7 @@ class PrivateUserEventsController {
 
   private final EventService eventService;
   private final ParticipationRequestService participationRequestService;
+  private final UserService userService;
 
   @GetMapping("/{userId}/events")
   public List<EventDto> getUserEvents(@PathVariable Long userId, Paging paging) {
@@ -54,8 +59,7 @@ class PrivateUserEventsController {
 
   @PatchMapping("/{userId}/events/{eventId}")
   public EventDto updateEventById(@PathVariable Long userId, @PathVariable Long eventId,
-      @Valid @RequestBody
-      UpdateEventDto request) {
+      @Valid @RequestBody UpdateEventDto request) {
     return eventService.updateUserEventById(userId, eventId, request);
   }
 
@@ -71,5 +75,21 @@ class PrivateUserEventsController {
     return participationRequestService.confirmUserEventRequests(userId, eventId, request);
   }
 
+  @GetMapping("/{userId}/likes")
+  public List<LikeDto> getUserLikes(@PathVariable Long userId, Paging paging) {
+    return userService.getUserLikes(userId, paging);
+  }
+
+  @PostMapping("/{userId}/like/event/{eventId}")
+  @ResponseStatus(HttpStatus.CREATED)
+  public LikeDto likeEvent(@PathVariable Long userId, @PathVariable Long eventId) {
+    return eventService.likeEvent(userId, eventId);
+  }
+
+  @DeleteMapping("/{userId}/like/{likeId}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void deleteLikeEvent(@PathVariable Long userId, @PathVariable Long likeId) {
+    eventService.deleteLike(userId, likeId);
+  }
 
 }
